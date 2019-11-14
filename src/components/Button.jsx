@@ -9,6 +9,8 @@ class Button extends React.Component {
     }
 
     async getProperty() {
+
+        //TODO
         console.log("Starting");
         this.state.property = await Property.getProperty();
         console.log(this.state.property);
