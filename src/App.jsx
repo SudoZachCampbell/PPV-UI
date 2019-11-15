@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
-import PropertyList from './containers/PropertyList';
+import Summary from './containers/Summary';
 import Button from './components/Button';
-import './App.css';
+import './App.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <PropertyList name="Jimmy" />
+        <Summary />
         <Button text="Yes"/>
       </div>
     );

@@ -12,8 +12,8 @@ class Button extends React.Component {
 
         //TODO
         console.log("Starting");
-        this.state.property = await Property.getProperty();
-        console.log(this.state.property);
+        let propertyBody = await Property.getProperty();
+        this.setState({ property: propertyBody});
     }
 
     render() {
