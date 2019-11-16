@@ -1,6 +1,6 @@
 import React from 'react';
-import './BarGraph.module.scss';
 import * as d3 from 'd3';
+import styles from './BarGraph.module.scss';
 
 class BarGraph extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class BarGraph extends React.Component {
             .domain([0, d3.max(data)])
             .range([0, width]);
 
-        var chart = d3.select(".chart")
+        var chart = d3.select("#keyword-chart")
             .attr("width", width)
             .attr("height", barHeight * data.length);
 
@@ -44,7 +44,7 @@ class BarGraph extends React.Component {
 
     render() {
         return (
-            <svg className="chart">
+            <svg id="keyword-chart" className={styles.chart}>
                 {this.drawChart()}
             </svg>
         );
