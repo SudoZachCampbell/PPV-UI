@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import Summary from './containers/Summary';
+import Search from './containers/Search';
 import Button from './components/Button';
 import './App.scss';
 
@@ -12,7 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Summary />
+        <Search />
         <Button text="Yes"/>
       </div>
     );
