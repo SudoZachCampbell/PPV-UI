@@ -15,7 +15,11 @@ export default {
 
     getProperty: (formBody) => {
         return new Promise((resolve, reject) => {
-            request.post("http://localhost:8080/property", {form: formBody}, (error, response, body) => {
+            request.post({
+                url: 'http://localhost:8080/property',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(formBody)
+            }, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {

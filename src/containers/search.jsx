@@ -4,21 +4,36 @@ import propertyAPI from '../api/get-property';
 export default class Search extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {propertySearch: {}}
     }
 
     async componentDidMount() {
-        const area = 'banbridge';
         const keywords = ['bathroom', 'kitchen', 'garden',];
-        let propertyUrls = await propertyAPI.getPropertyUrls(area);
-        propertyUrls = JSON.parse(propertyUrls);
-        const searchId = propertyUrls.searchId;
+        console.log("Hit")
+        let propertyUrlsList = await propertyAPI.getPropertyUrls(this.props.area);
+        propertyUrlsList = JSON.parse(propertyUrlsList);
+        const searchId = propertyUrlsList.searchId;
+        console.log("Hit2")
         let propertyObject = {
-            searchId: searchId
+            searchId: searchId,
+            keywords: {}
         }
-        propertyUrls.propertyUrls.reduce(async (accum, url) => {
+        propertyUrlsList.propertyUrls.reduce(async (accum, url) => {
             let propertyReturn = await this.getProperty(searchId, url, keywords);
+            propertyReturn = JSON.parse(propertyReturn);
+            propertyReturn.keywords.forEach(keyword => {
+                if(keyword in propertyObject.keywords) {
+                    propertyObject.keywords[keyword]++
+                } else {
+                    propertyObject.keywords[keyword] = 1
+                }
+            })
             propertyObject[propertyReturn.id] = propertyReturn;
+            this.setState({propertySearch: propertyObject});
         }, propertyObject)
+        console.log("Hit3")
+        this.setState({propertySearch: propertyObject}) 
+        console.log("Hit4")
     }
 
     async getProperty(searchId, url, keywords) {
@@ -33,7 +48,7 @@ export default class Search extends React.Component {
     render() {
         return (
             <div>
-                Yes
+                Search: {JSON.stringify(this.state.propertySearch)}
             </div>
         );
     }
