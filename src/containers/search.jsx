@@ -9,11 +9,9 @@ export default class Search extends React.Component {
 
     async componentDidMount() {
         const keywords = ['bathroom', 'kitchen', 'garden',];
-        console.log("Hit")
         let propertyUrlsList = await propertyAPI.getPropertyUrls(this.props.area);
         propertyUrlsList = JSON.parse(propertyUrlsList);
         const searchId = propertyUrlsList.searchId;
-        console.log("Hit2")
         let propertyObject = {
             searchId: searchId,
             keywords: {}
@@ -31,9 +29,7 @@ export default class Search extends React.Component {
             propertyObject[propertyReturn.id] = propertyReturn;
             this.setState({propertySearch: propertyObject});
         }, propertyObject)
-        console.log("Hit3")
-        this.setState({propertySearch: propertyObject}) 
-        console.log("Hit4")
+        this.props.callback(propertyObject);
     }
 
     async getProperty(searchId, url, keywords) {
