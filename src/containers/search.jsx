@@ -8,7 +8,6 @@ export default class Search extends React.Component {
     }
 
     async componentDidMount() {
-        const keywords = ['bathroom', 'kitchen', 'garden',];
         let propertyUrlsList = await propertyAPI.getPropertyUrls(this.props.area);
         propertyUrlsList = JSON.parse(propertyUrlsList);
         const searchId = propertyUrlsList.searchId;
@@ -16,8 +15,8 @@ export default class Search extends React.Component {
             searchId: searchId,
             keywords: {}
         }
-        propertyUrlsList.propertyUrls.reduce(async (accum, url) => {
-            let propertyReturn = await this.getProperty(searchId, url, keywords);
+        propertyUrlsList.propertyUrls.forEach(async url => {
+            let propertyReturn = await this.getProperty(searchId, url, this.props.keywords);
             propertyReturn = JSON.parse(propertyReturn);
             propertyReturn.keywords.forEach(keyword => {
                 if(keyword in propertyObject.keywords) {
@@ -27,9 +26,10 @@ export default class Search extends React.Component {
                 }
             })
             propertyObject[propertyReturn.id] = propertyReturn;
-            this.props.callback(propertyObject);
-            this.setState({propertySearch: propertyObject});
-        }, propertyObject)
+            this.setState({propertySearch: propertyObject}, () => {
+                this.props.callback(propertyObject);
+            });
+        })
     }
 
     async getProperty(searchId, url, keywords) {

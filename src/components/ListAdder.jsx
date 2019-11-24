@@ -11,8 +11,9 @@ export default class ListAdder extends React.Component {
   addInputToList = () => {
     if (this.state.currentInput) {
       const newInputList = [...this.state.inputs, this.state.currentInput];
-      this.setState({ inputs: newInputList, currentInput: "" });
-      this.props.callback(this.state.inputs);
+      this.setState({ inputs: newInputList, currentInput: "" }, () => {
+        this.props.callback(this.state.inputs);
+      });
     }
   };
 
@@ -23,7 +24,7 @@ export default class ListAdder extends React.Component {
   render() {
     return (
       <div>
-        <label for={this.props.id}>{this.props.label}</label>
+        <label htmlFor={this.props.id}>{this.props.label}</label>
         <input
           id={this.props.id}
           onChange={this.inputTextChange}
@@ -31,8 +32,8 @@ export default class ListAdder extends React.Component {
         />
         <button onClick={this.addInputToList}>Add</button>
         <ul>
-          {this.state.inputs.map(value => (
-            <li>{value}</li>
+          {this.state.inputs.map((value, index) => (
+            <li key={index}>{value}</li>
           ))}
         </ul>
       </div>

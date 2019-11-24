@@ -60,16 +60,13 @@ class App extends React.Component {
     }
     return (
       <div className="App">
-        <label for='app_areainput'>Area: </label>
+        <label htmlFor='app_areainput'>Area: </label>
         <input id='app_areainput' value={area} onChange={this.textChange} placeholder="Belfast" />
         <br />
         <ListAdder id="app_keywordinput" label="Keywords: " callback={this.keywordListUpdate} />
         <ComponentButton buttonText="Search">
-          <Search area={this.state.area} callback={this.searchResult} />
+          <Search area={this.state.area} keywords={this.state.keywords} callback={this.searchResult} />
         </ComponentButton>
-        <ul>
-          {this.state.keywords.map(value => <li>{value}</li>)}
-        </ul>
         <p>{JSON.stringify(this.state.result)}</p>
       </div >
     );
