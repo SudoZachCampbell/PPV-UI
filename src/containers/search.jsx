@@ -27,9 +27,9 @@ export default class Search extends React.Component {
                 }
             })
             propertyObject[propertyReturn.id] = propertyReturn;
+            this.props.callback(propertyObject);
             this.setState({propertySearch: propertyObject});
         }, propertyObject)
-        this.props.callback(propertyObject);
     }
 
     async getProperty(searchId, url, keywords) {
@@ -44,7 +44,7 @@ export default class Search extends React.Component {
     render() {
         return (
             <div>
-                Search: {JSON.stringify(this.state.propertySearch)}
+                {/* Search: {JSON.stringify(this.state.propertySearch)} */}
             </div>
         );
     }
