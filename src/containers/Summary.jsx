@@ -1,5 +1,5 @@
 import React from "react";
-import Keywords from "../containers/Keywords";
+import BarGraph from "../components/BarGraph";
 
 export default class Summary extends React.Component {
   constructor(props) {
@@ -7,6 +7,6 @@ export default class Summary extends React.Component {
   }
 
   render() {
-    return <Keywords />;
+    return <BarGraph data={Object.values(this.props.searchResult.keywords)} />;
   }
 }

@@ -1,51 +1,51 @@
 import React from 'react';
-import propertyAPI from '../api/get-property';
+import ComponentButton from '../components/ComponentButton';
+import ListAdder from '../components/ListAdder';
 
 export default class Search extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {propertySearch: {}}
-    }
+  constructor(props) {
+    super(props);
+    this.state = { area: '', searchParams: {} };
+    this.keywordListUpdate = this.keywordListUpdate.bind(this);
+    this.textChange = this.textChange.bind(this);
+  }
 
-    async componentDidMount() {
-        let propertyUrlsList = await propertyAPI.getPropertyUrls(this.props.area);
-        propertyUrlsList = JSON.parse(propertyUrlsList);
-        const searchId = propertyUrlsList.searchId;
-        let propertyObject = {
-            searchId: searchId,
-            keywords: {}
-        }
-        propertyUrlsList.propertyUrls.forEach(async url => {
-            let propertyReturn = await this.getProperty(searchId, url, this.props.keywords);
-            propertyReturn = JSON.parse(propertyReturn);
-            propertyReturn.keywords.forEach(keyword => {
-                if(keyword in propertyObject.keywords) {
-                    propertyObject.keywords[keyword]++
-                } else {
-                    propertyObject.keywords[keyword] = 1
-                }
-            })
-            propertyObject[propertyReturn.id] = propertyReturn;
-            this.setState({propertySearch: propertyObject}, () => {
-                this.props.callback(propertyObject);
-            });
-        })
-    }
+  keywordListUpdate = keywordList => {
+    let searchParams = { ...this.state.searchParams };
+    searchParams.keywords = keywordList;
+    this.setState({ searchParams: searchParams });
+  };
 
-    async getProperty(searchId, url, keywords) {
-        let formBody = {
-            keywords: keywords,
-            searchId: searchId,
-            propertyUrl: url
-        }
-        return await propertyAPI.getProperty(formBody);
-    }
+  textChange = e => {
+    this.setState({ area: e.target.value });
+  };
 
-    render() {
-        return (
-            <div>
-                {/* Search: {JSON.stringify(this.state.propertySearch)} */}
-            </div>
-        );
+  searchStarted = () => {
+    this.props.executeSearch(this.state.area, this.state.searchParams);
+  };
+
+  render() {
+    let area = '';
+    if (this.state.area) {
+      area = this.state.area;
     }
+    return (
+      <div>
+        <label htmlFor='app_areainput'>Area: </label>
+        <input
+          id='app_areainput'
+          value={area}
+          onChange={this.textChange}
+          placeholder='Belfast'
+        />
+        <br />
+        <ListAdder
+          id='app_keywordinput'
+          label='Keywords: '
+          callback={this.keywordListUpdate}
+        />
+        <button onClick={this.searchStarted}>Search</button>
+      </div>
+    );
+  }
 }
