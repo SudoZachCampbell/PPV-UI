@@ -1,5 +1,5 @@
-import React from "react";
-import propertyAPI from "../api/get-property";
+import React from 'react';
+import propertyAPI from '../api/get-property';
 
 export default class Loading extends React.Component {
   constructor(props) {
@@ -15,12 +15,13 @@ export default class Loading extends React.Component {
       searchId: searchId,
       keywords: {}
     };
-    propertyUrlsList.propertyUrls.forEach(async url => {
-      let propertyReturn = await this.getProperty(
-        searchId,
-        url,
-        this.props.searchParams.keywords
-      );
+    for (let i = 0; i < propertyUrlsList.propertyUrls.length; i++) {
+      let formBody = {
+        searchId: searchId,
+        propertyUrl: propertyUrlsList.propertyUrls[i],
+        keywords: this.props.searchParams.keywords
+      };
+      let propertyReturn = await propertyAPI.getProperty(formBody);
       propertyReturn = JSON.parse(propertyReturn);
       propertyReturn.keywords.forEach(keyword => {
         if (keyword in propertyObject.keywords) {
@@ -31,7 +32,7 @@ export default class Loading extends React.Component {
       });
       propertyObject[propertyReturn.id] = propertyReturn;
       this.setState({ propertySearch: propertyObject });
-    });
+    }
     this.props.finishLoading(this.state.propertySearch);
   }
 
