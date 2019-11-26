@@ -1,6 +1,8 @@
 import React from 'react';
-import ComponentButton from '../components/ComponentButton';
 import ListAdder from '../components/ListAdder';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -44,6 +46,11 @@ export default class Search extends React.Component {
           label='Keywords: '
           callback={this.keywordListUpdate}
         />
+        <InputLabel id='label'>Bedrooms</InputLabel>
+        <Select labelId='label' id='select' value='20'>
+          <MenuItem value='10'>Ten</MenuItem>
+          <MenuItem value='20'>Twenty</MenuItem>
+        </Select>
         <button onClick={this.searchStarted}>Search</button>
       </div>
     );

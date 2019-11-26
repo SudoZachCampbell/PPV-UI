@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.7.0",
+    "@material-ui/icons": "^4.5.1",
     "d3": "^5.12.0",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
@@ -10,6 +12,7 @@
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
     "request": "^2.88.0",
+    "typeface-roboto": "0.0.75",
     "webpack": "4.41.0"
   },
   "scripts": {
