@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Search from './containers/Search';
 import Loading from './containers/Loading';
 import Summary from './containers/Summary';
@@ -11,14 +11,15 @@ function App(props) {
   const [searchResult, setSearchResult] = useState({});
 
   const executeSearch = (area, searchParams) => {
-    setViewState(1);
     setArea(area);
     setSearchParams(searchParams);
+    setViewState(1);
   };
 
-  const finishLoading = searchResult => {
+  const finishLoading = returnedSearchResult => {
+    setSearchResult(returnedSearchResult);
     setViewState(2);
-    setSearchResult(setSearchResult);
+
   };
 
   let view;
@@ -27,6 +28,7 @@ function App(props) {
       view = <Search executeSearch={executeSearch} />;
       break;
     case 1:
+      console.log(searchParams)
       view = (
         <Loading
           area={area}
@@ -36,6 +38,7 @@ function App(props) {
       );
       break;
     case 2:
+      console.log(searchResult)
       view = <Summary searchResult={searchResult} />;
       break;
     default:

@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ListAdder from '../components/ListAdder';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 
 export default function Search(props) {
   const [area, setArea] = useState('');
@@ -12,7 +9,7 @@ export default function Search(props) {
 
   const keywordListUpdate = keywordList => {
     searchParams.keywords = keywordList;
-    setSearchParams({ searchParams: searchParams });
+    setSearchParams(searchParams);
   };
 
   const textChange = e => {
@@ -38,12 +35,7 @@ export default function Search(props) {
         label='Keywords: '
         callback={keywordListUpdate}
       />
-      <InputLabel id='label'>Bedrooms</InputLabel>
-      <Select labelId='label' id='select' value='20'>
-        <MenuItem value='10'>Ten</MenuItem>
-        <MenuItem value='20'>Twenty</MenuItem>
-      </Select>
-      <button onClick={searchStarted}>Search</button>
+      <Button variant='contained' color='primary' onClick={searchStarted}>Search</Button>
     </div>
   );
 }
