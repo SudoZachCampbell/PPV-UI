@@ -1,58 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ListAdder from '../components/ListAdder';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { area: '', searchParams: {} };
-    this.keywordListUpdate = this.keywordListUpdate.bind(this);
-    this.textChange = this.textChange.bind(this);
-  }
+export default function Search(props) {
+  const [area, setArea] = useState('');
+  const [searchParams, setSearchParams] = useState({});
 
-  keywordListUpdate = keywordList => {
-    let searchParams = { ...this.state.searchParams };
+  const keywordListUpdate = keywordList => {
     searchParams.keywords = keywordList;
-    this.setState({ searchParams: searchParams });
+    setSearchParams({ searchParams: searchParams });
   };
 
-  textChange = e => {
-    this.setState({ area: e.target.value });
+  const textChange = e => {
+    setArea(e.target.value);
   };
 
-  searchStarted = () => {
-    this.props.executeSearch(this.state.area, this.state.searchParams);
+  const searchStarted = () => {
+    props.executeSearch(area, searchParams);
   };
 
-  render() {
-    let area = '';
-    if (this.state.area) {
-      area = this.state.area;
-    }
-    return (
-      <div>
-        <label htmlFor='app_areainput'>Area: </label>
-        <input
-          id='app_areainput'
-          value={area}
-          onChange={this.textChange}
-          placeholder='Belfast'
-        />
-        <br />
-        <ListAdder
-          id='app_keywordinput'
-          label='Keywords: '
-          callback={this.keywordListUpdate}
-        />
-        <InputLabel id='label'>Bedrooms</InputLabel>
-        <Select labelId='label' id='select' value='20'>
-          <MenuItem value='10'>Ten</MenuItem>
-          <MenuItem value='20'>Twenty</MenuItem>
-        </Select>
-        <button onClick={this.searchStarted}>Search</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <TextField
+        required
+        id='app_areainput'
+        label='Area'
+        onChange={textChange}
+        margin='normal'
+      />
+      <br />
+      <ListAdder
+        id='app_keywordinput'
+        label='Keywords: '
+        callback={keywordListUpdate}
+      />
+      <InputLabel id='label'>Bedrooms</InputLabel>
+      <Select labelId='label' id='select' value='20'>
+        <MenuItem value='10'>Ten</MenuItem>
+        <MenuItem value='20'>Twenty</MenuItem>
+      </Select>
+      <button onClick={searchStarted}>Search</button>
+    </div>
+  );
 }
