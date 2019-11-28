@@ -6,16 +6,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
+import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import GoogleMapReact from 'google-map-react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import './Search.scss';
+import '../stylesheets/pages/Search.scss';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: 0,
+    margin: '0 5%',
     fullWidth: true,
     display: 'flex',
     wrap: 'nowrap'
@@ -33,6 +35,10 @@ export default function Search(props) {
   const [searchParams, setSearchParams] = useState({});
   const [furnished, setFurnished] = useState('');
   const [bedrooms, setBedrooms] = useState([1, 6]);
+  const [minPrice, setMinPrice] = useState(0.0);
+  const [maxPrice, setMaxPrice] = useState(0.0);
+  const [student, setStudent] = useState(false);
+  const [expoa, setExpoa] = useState(false);
 
   const mapStats = { center: { lat: 59.95, lng: 30.33 }, zoom: 11 };
 
@@ -53,17 +59,45 @@ export default function Search(props) {
     props.executeSearch(area, searchParams);
   };
 
+  const studentChanged = e => {
+    setStudent(e.target.checked);
+  };
+
   return (
     <div className='search-container'>
-      <FormControl>
+      <FormControl className='area-control'>
         <TextField
           required
-          id='app_areainput'
+          id='search_areainput'
           label='Area'
           onChange={textChange}
           margin='normal'
         />
       </FormControl>
+      <br />
+      <div className='price-container'>
+        <Typography id='discrete-slider'>Price</Typography>
+        <div>
+          <FormControl>
+            <TextField
+              id='search_minprice'
+              label='Min'
+              onChange={e => setMinPrice(e.target.value)}
+              margin='normal'
+              className='text-field'
+            />
+          </FormControl>
+          <FormControl>
+            <TextField
+              id='app_areainput'
+              label='Max'
+              onChange={e => setMaxPrice(e.target.value)}
+              margin='normal'
+              className='text-field'
+            />
+          </FormControl>
+        </div>
+      </div>
       <br />
       <div className='slider'>
         <Typography id='discrete-slider' gutterBottom>
@@ -106,14 +140,39 @@ export default function Search(props) {
         callback={keywordListUpdate}
       />
       <br />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={student}
+            onChange={studentChanged}
+            value={student}
+            color='primary'
+          />
+        }
+        label='Student'
+        labelPlacement='start'
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={student}
+            onChange={studentChanged}
+            value={student}
+            color='primary'
+          />
+        }
+        label='Include POA'
+        labelPlacement='start'
+      />
+      <br />
       <div className='map'>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
-        defaultCenter={mapStats.center}
-        defaultZoom={mapStats.zoom}
-      >
-        <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
-      </GoogleMapReact>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
+          defaultCenter={mapStats.center}
+          defaultZoom={mapStats.zoom}
+        >
+          <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
+        </GoogleMapReact>
       </div>
       <br />
       <Button variant='contained' color='primary' onClick={searchStarted}>
