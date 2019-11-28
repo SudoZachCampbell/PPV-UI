@@ -35,10 +35,11 @@ export default function Search(props) {
   const [searchParams, setSearchParams] = useState({});
   const [furnished, setFurnished] = useState('');
   const [bedrooms, setBedrooms] = useState([1, 6]);
-  const [minPrice, setMinPrice] = useState(0.0);
-  const [maxPrice, setMaxPrice] = useState(0.0);
+  const [minPrice, setMinPrice] = useState(0.00);
+  const [maxPrice, setMaxPrice] = useState(0.00);
   const [student, setStudent] = useState(false);
   const [expoa, setExpoa] = useState(false);
+  const [range, setRange] = useState(0.25);
 
   const mapStats = { center: { lat: 59.95, lng: 30.33 }, zoom: 11 };
 
@@ -51,16 +52,32 @@ export default function Search(props) {
     setArea(e.target.value);
   };
 
+  const studentChanged = e => {
+    setStudent(e.target.checked);
+  };
+  
+  const expoaChanged = e => {
+    setExpoa(e.target.checked);
+  };
+
+  const minPriceChanged = e => {
+    setMinPrice(e.target.value)
+  }
+
+  const maxPriceChanged = e => {
+    setMaxPrice(e.target.value)
+  }
+
   const bedsChanged = (e, newValue) => {
     setBedrooms(newValue);
   };
 
+  const rangeChanged = (e, newValue) => {
+setRange(newValue);
+  }
+
   const searchStarted = () => {
     props.executeSearch(area, searchParams);
-  };
-
-  const studentChanged = e => {
-    setStudent(e.target.checked);
   };
 
   return (
@@ -82,7 +99,7 @@ export default function Search(props) {
             <TextField
               id='search_minprice'
               label='Min'
-              onChange={e => setMinPrice(e.target.value)}
+              onChange={minPriceChanged}
               margin='normal'
               className='text-field'
             />
@@ -91,7 +108,7 @@ export default function Search(props) {
             <TextField
               id='app_areainput'
               label='Max'
-              onChange={e => setMaxPrice(e.target.value)}
+              onChange={maxPriceChanged}
               margin='normal'
               className='text-field'
             />
@@ -155,9 +172,9 @@ export default function Search(props) {
       <FormControlLabel
         control={
           <Switch
-            checked={student}
-            onChange={studentChanged}
-            value={student}
+            checked={expoa}
+            onChange={expoaChanged}
+            value={expoa}
             color='primary'
           />
         }
@@ -173,6 +190,7 @@ export default function Search(props) {
         >
           <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
         </GoogleMapReact>
+        <Slider orientation='vertical' defaultValue={range} onChange={rangeChanged} />
       </div>
       <br />
       <Button variant='contained' color='primary' onClick={searchStarted}>
