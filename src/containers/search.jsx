@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
-import GoogleMapReact from 'google-map-react';
+import GoogleMap from 'google-map-react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import '../stylesheets/pages/Search.scss';
@@ -27,19 +27,81 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 export default function Search(props) {
   const classes = useStyles;
   const [area, setArea] = useState('');
   const [searchParams, setSearchParams] = useState({});
   const [furnished, setFurnished] = useState('');
   const [bedrooms, setBedrooms] = useState([1, 6]);
-  const [minPrice, setMinPrice] = useState(0.00);
-  const [maxPrice, setMaxPrice] = useState(0.00);
+  const [minPrice, setMinPrice] = useState(0.0);
+  const [maxPrice, setMaxPrice] = useState(0.0);
   const [student, setStudent] = useState(false);
   const [expoa, setExpoa] = useState(false);
-  const [range, setRange] = useState(0.25);
+  const [range, setRange] = useState(5);
+
+  const summary = {
+    area,
+    searchParams,
+    furnished,
+    bedrooms,
+    minPrice,
+    maxPrice,
+    student,
+    expoa,
+    range
+  };
+
+  const mapStyle = {
+    width: range * 10 + 'px',
+    height: range * 10 + 'px',
+    marginLeft: -(range * 10)/2 + 'px',
+    marginTop: -(range * 10)/2 + 'px',
+    transition: ['width'],
+    transitionDuration: 3000
+  };
+
+  const AnyReactComponent = ({ text }) => (
+    <div className='radius-range' style={mapStyle}></div>
+  );
+
+  const steps = [
+    {
+      value: 0.25
+    },
+    {
+      value: 0.5
+    },
+    {
+      value: 0.75
+    },
+    {
+      value: 1
+    },
+    {
+      value: 2
+    },
+    {
+      value: 3
+    },
+    {
+      value: 4
+    },
+    {
+      value: 5
+    },
+    {
+      value: 10
+    },
+    {
+      value: 15
+    },
+    {
+      value: 20
+    },
+    {
+      value: 25
+    }
+  ];
 
   const mapStats = { center: { lat: 59.95, lng: 30.33 }, zoom: 11 };
 
@@ -55,26 +117,26 @@ export default function Search(props) {
   const studentChanged = e => {
     setStudent(e.target.checked);
   };
-  
+
   const expoaChanged = e => {
     setExpoa(e.target.checked);
   };
 
   const minPriceChanged = e => {
-    setMinPrice(e.target.value)
-  }
+    setMinPrice(e.target.value);
+  };
 
   const maxPriceChanged = e => {
-    setMaxPrice(e.target.value)
-  }
+    setMaxPrice(e.target.value);
+  };
 
   const bedsChanged = (e, newValue) => {
     setBedrooms(newValue);
   };
 
   const rangeChanged = (e, newValue) => {
-setRange(newValue);
-  }
+    setRange(newValue);
+  };
 
   const searchStarted = () => {
     props.executeSearch(area, searchParams);
@@ -183,19 +245,30 @@ setRange(newValue);
       />
       <br />
       <div className='map'>
-        <GoogleMapReact
+        <GoogleMap
           bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
           defaultCenter={mapStats.center}
           defaultZoom={mapStats.zoom}
         >
           <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
-        </GoogleMapReact>
-        <Slider orientation='vertical' defaultValue={range} onChange={rangeChanged} />
+        </GoogleMap>
+        <Slider
+          orientation='vertical'
+          onChange={rangeChanged}
+          defaultValue={5}
+          min={0.25}
+          max={25}
+          step={null}
+          marks={steps}
+          valueLabelDisplay='auto'
+        />
       </div>
       <br />
       <Button variant='contained' color='primary' onClick={searchStarted}>
         Search
       </Button>
+      <br />
+      <p>{JSON.stringify(summary)}</p>
     </div>
   );
 }
