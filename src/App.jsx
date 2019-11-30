@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Search from './containers/Search';
-import Loading from './containers/Loading';
-import Summary from './containers/Summary';
+import Search from './containers/Search/Search';
+import Loading from './containers/Loading/Loading';
+import Summary from './containers/Summary/Summary';
 import './App.scss';
 
 function App(props) {

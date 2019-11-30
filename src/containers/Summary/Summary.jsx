@@ -1,5 +1,5 @@
 import React from 'react';
-import BarGraph from '../components/BarGraph/BarGraph';
+import BarGraph from '../../components/BarGraph/BarGraph';
 
 export default class Summary extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Summary from '../containers/Summary'
+import Summary from '../../containers/Summary/Summary'
 
 class ComponentButton extends React.Component {
     constructor(props) {

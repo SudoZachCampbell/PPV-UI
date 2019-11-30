@@ -1,5 +1,5 @@
 import React from 'react';
-import propertyAPI from '../api/get-property';
+import propertyAPI from '../../api/get-property';
 
 export default class Loading extends React.Component {
   constructor(props) {

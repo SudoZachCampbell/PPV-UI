@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ListAdder from '../components/ListAdder/ListAdder';
+import ListAdder from '../../components/ListAdder/ListAdder';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,9 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import GoogleMap from 'google-map-react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import PriceTextField from '../components/PriceTextField/PriceTextField';
-import FormTextField from '../components/FormTextField/FormTextField';
-import HorizontalSlider from '../components/HorizontalSlider/HorizontalSlider';
+import PriceTextField from '../../components/PriceTextField/PriceTextField';
+import FormTextField from '../../components/FormTextField/FormTextField';
+import HorizontalSlider from '../../components/HorizontalSlider/HorizontalSlider';
 
 import '../stylesheets/pages/Search.scss';
 
