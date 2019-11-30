@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Slider from '@material-ui/core/Slider';
-import Switch from '@material-ui/core/Switch';
-import Typography from '@material-ui/core/Typography';
-import GoogleMap from 'google-map-react';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-import PriceTextField from '../../components/PriceTextField/PriceTextField';
+import DropDown from '../../components/DropDown/DropDown';
 import FormTextField from '../../components/FormTextField/FormTextField';
-import ListAdder from '../../components/ListAdder/ListAdder';
+import GoogleMap from '../../components/GoogleMap/GoogleMap';
 import HorizontalSlider from '../../components/HorizontalSlider/HorizontalSlider';
+import ListAdder from '../../components/ListAdder/ListAdder';
+import PriceTextField from '../../components/PriceTextField/PriceTextField';
+import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
+
+import geocoder from '../../api/geocoder';
 
 import './Search.scss';
 
@@ -43,6 +38,7 @@ export default function Search(props) {
   const [student, setStudent] = useState(false);
   const [expoa, setExpoa] = useState(false);
   const [range, setRange] = useState(5);
+  const [position, setPosition] = useState([0, 0]);
 
   const summary = {
     area,
@@ -55,20 +51,6 @@ export default function Search(props) {
     expoa,
     range
   };
-
-  const rangeCalc = range * 10;
-
-  const mapStyle = {
-    width: `${rangeCalc}px`,
-    height: `${rangeCalc}px`,
-    marginLeft: -rangeCalc / 2 + 'px',
-    marginTop: -rangeCalc / 2 + 'px',
-    transition: 'all 2s'
-  };
-
-  const AnyReactComponent = ({ text }) => (
-    <div className='radius-range' style={mapStyle}></div>
-  );
 
   const steps = [
     {
@@ -109,7 +91,24 @@ export default function Search(props) {
     }
   ];
 
-  const mapStats = { center: { lat: 59.95, lng: 30.33 }, zoom: 11 };
+  const furnishedOptions = [
+    {
+      value: 'unfurnished',
+      label: 'Unfurnished'
+    },
+    {
+      value: 'fullyFurnished',
+      label: 'Fully Furnished'
+    },
+    {
+      value: 'partlyFurnished',
+      label: 'Partly Furnished'
+    },
+    {
+      value: 'optional',
+      label: 'Optional'
+    }
+  ];
 
   const areaChanged = e => {
     setArea(e.target.value);
@@ -122,6 +121,10 @@ export default function Search(props) {
 
   const studentChanged = e => {
     setStudent(e.target.checked);
+  };
+
+  const furnishedChanged = e => {
+    setFurnished(e.target.value);
   };
 
   const expoaChanged = e => {
@@ -144,13 +147,23 @@ export default function Search(props) {
     setRange(newValue);
   };
 
+  const areaUnfocused = e => {
+    geocoder.getLLByArea(e.target.value).then(data => {
+      const location = data.results[0].geometry.location;
+      setPosition([location.lat, location.lng]);
+    });
+  };
+
   const searchStarted = () => {
     props.executeSearch(area, searchParams);
   };
 
   return (
     <div className='search-container'>
-      <FormTextField label='Area' callback={areaChanged} />
+      <FormTextField
+        label='Area'
+        callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
+      />
       <br />
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
@@ -167,24 +180,11 @@ export default function Search(props) {
         callback={bedsChanged}
       />
       <br />
-      <div className='select'>
-        <FormControl className='{classes.formControl} select'>
-          <InputLabel htmlFor='furnished-dropdown'>Furnished</InputLabel>
-          <Select
-            id='furnished-dropdown'
-            value={furnished}
-            onChange={e => setFurnished(e.target.value)}
-          >
-            <MenuItem value={''}>
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={'unfurnished'}>Unfurnished</MenuItem>
-            <MenuItem value={'partlyFurnished'}>Partially Furnished</MenuItem>
-            <MenuItem value={'fullyFurnished'}>Fully Furnished</MenuItem>
-            <MenuItem value={'optional'}>Optional</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
+      <DropDown
+        label='Furnished'
+        values={furnishedOptions}
+        callback={furnishedChanged}
+      />
       <br />
       <ListAdder
         id='app_keywordinput'
@@ -192,54 +192,22 @@ export default function Search(props) {
         callback={keywordListUpdate}
       />
       <br />
-      <FormControlLabel
-        control={
-          <Switch
-            checked={student}
-            onChange={studentChanged}
-            value={student}
-            color='primary'
-          />
-        }
-        label='Student'
-        labelPlacement='start'
-      />
-      <FormControlLabel
-        control={
-          <Switch
-            checked={expoa}
-            onChange={expoaChanged}
-            value={expoa}
-            color='primary'
-          />
-        }
-        label='Include POA'
-        labelPlacement='start'
-      />
+      <ToggleSwitch label='Student' callback={studentChanged} />
+      <ToggleSwitch label='Include POA' callback={expoaChanged} />
       <br />
-      <div className='map'>
-        <GoogleMap
-          bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
-          defaultCenter={mapStats.center}
-          defaultZoom={mapStats.zoom}
-        >
-          <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
-        </GoogleMap>
-        <Slider
-          orientation='vertical'
-          onChange={rangeChanged}
-          defaultValue={5}
-          min={0.25}
-          max={25}
-          step={null}
-          marks={steps}
-          valueLabelDisplay='auto'
-        />
-      </div>
+
       <br />
       <Button variant='contained' color='primary' onClick={searchStarted}>
         Search
       </Button>
+      <br />
+      <GoogleMap
+        range={range}
+        steps={steps}
+        lat={position[0]}
+        long={position[1]}
+        callback={rangeChanged}
+      />
       <br />
       <p>{JSON.stringify(summary)}</p>
     </div>
