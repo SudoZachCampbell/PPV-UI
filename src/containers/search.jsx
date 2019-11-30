@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import ListAdder from '../components/ListAdder';
+import ListAdder from '../components/ListAdder/ListAdder';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,6 +13,10 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import GoogleMap from 'google-map-react';
 import { makeStyles } from '@material-ui/core/styles';
+
+import PriceTextField from '../components/PriceTextField/PriceTextField';
+import FormTextField from '../components/FormTextField/FormTextField';
+import HorizontalSlider from '../components/HorizontalSlider/HorizontalSlider';
 
 import '../stylesheets/pages/Search.scss';
 
@@ -51,13 +56,14 @@ export default function Search(props) {
     range
   };
 
+  const rangeCalc = range * 10;
+
   const mapStyle = {
-    width: range * 10 + 'px',
-    height: range * 10 + 'px',
-    marginLeft: -(range * 10)/2 + 'px',
-    marginTop: -(range * 10)/2 + 'px',
-    transition: ['width'],
-    transitionDuration: 3000
+    width: `${rangeCalc}px`,
+    height: `${rangeCalc}px`,
+    marginLeft: -rangeCalc / 2 + 'px',
+    marginTop: -rangeCalc / 2 + 'px',
+    transition: 'all 2s'
   };
 
   const AnyReactComponent = ({ text }) => (
@@ -105,13 +111,13 @@ export default function Search(props) {
 
   const mapStats = { center: { lat: 59.95, lng: 30.33 }, zoom: 11 };
 
+  const areaChanged = e => {
+    setArea(e.target.value);
+  };
+
   const keywordListUpdate = keywordList => {
     searchParams.keywords = keywordList;
     setSearchParams(searchParams);
-  };
-
-  const textChange = e => {
-    setArea(e.target.value);
   };
 
   const studentChanged = e => {
@@ -144,55 +150,22 @@ export default function Search(props) {
 
   return (
     <div className='search-container'>
-      <FormControl className='area-control'>
-        <TextField
-          required
-          id='search_areainput'
-          label='Area'
-          onChange={textChange}
-          margin='normal'
-        />
-      </FormControl>
+      <FormTextField label='Area' callback={areaChanged} />
       <br />
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
         <div>
-          <FormControl>
-            <TextField
-              id='search_minprice'
-              label='Min'
-              onChange={minPriceChanged}
-              margin='normal'
-              className='text-field'
-            />
-          </FormControl>
-          <FormControl>
-            <TextField
-              id='app_areainput'
-              label='Max'
-              onChange={maxPriceChanged}
-              margin='normal'
-              className='text-field'
-            />
-          </FormControl>
+          <PriceTextField label='Min' callback={minPriceChanged} />
+          <PriceTextField label='Max' callback={maxPriceChanged} />
         </div>
       </div>
       <br />
-      <div className='slider'>
-        <Typography id='discrete-slider' gutterBottom>
-          Bedrooms
-        </Typography>
-        <Slider
-          value={bedrooms}
-          onChange={bedsChanged}
-          aria-labelledby='discrete-slider'
-          valueLabelDisplay='auto'
-          step={1}
-          marks
-          min={1}
-          max={6}
-        />
-      </div>
+      <HorizontalSlider
+        label='Bedrooms'
+        value={bedrooms}
+        form={[1, 6, 1]}
+        callback={bedsChanged}
+      />
       <br />
       <div className='select'>
         <FormControl className='{classes.formControl} select'>

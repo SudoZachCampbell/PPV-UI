@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-import styles from '../stylesheets/components/BarGraph.module.scss';
+import styles from './BarGraph.module.scss';
 
 class BarGraph extends React.Component {
   constructor(props) {
