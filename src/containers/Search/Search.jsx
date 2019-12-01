@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import DropDown from '../../components/DropDown/DropDown';
+import MultiDropDown from '../../components/MultiDropDown/MultiDropDown';
 import FormTextField from '../../components/FormTextField/FormTextField';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
 import HorizontalSlider from '../../components/HorizontalSlider/HorizontalSlider';
@@ -15,42 +14,16 @@ import geocoder from '../../api/geocoder';
 
 import './Search.scss';
 
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: '0 5%',
-    fullWidth: true,
-    display: 'flex',
-    wrap: 'nowrap'
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-}));
-
-export default function Search(props) {
-  const classes = useStyles;
-  const [area, setArea] = useState('');
-  const [searchParams, setSearchParams] = useState({});
-  const [furnished, setFurnished] = useState('');
+export default function Search(props) {  const [area, setArea] = useState('');
+  const [keywords, setKeywords] = useState([]);
+  const [furnished, setFurnished] = useState([]);
   const [bedrooms, setBedrooms] = useState([1, 6]);
   const [minPrice, setMinPrice] = useState(0.0);
   const [maxPrice, setMaxPrice] = useState(0.0);
   const [student, setStudent] = useState(false);
   const [expoa, setExpoa] = useState(false);
-  const [range, setRange] = useState(5);
+  const [radius, setRadius] = useState(5);
   const [position, setPosition] = useState([0, 0]);
-
-  const summary = {
-    area,
-    searchParams,
-    furnished,
-    bedrooms,
-    minPrice,
-    maxPrice,
-    student,
-    expoa,
-    range
-  };
 
   const steps = [
     {
@@ -115,8 +88,7 @@ export default function Search(props) {
   };
 
   const keywordListUpdate = keywordList => {
-    searchParams.keywords = keywordList;
-    setSearchParams(searchParams);
+    setKeywords(keywordList);
   };
 
   const studentChanged = e => {
@@ -144,7 +116,7 @@ export default function Search(props) {
   };
 
   const rangeChanged = (e, newValue) => {
-    setRange(newValue);
+    setRadius(newValue);
   };
 
   const areaUnfocused = e => {
@@ -153,6 +125,26 @@ export default function Search(props) {
       setPosition([location.lat, location.lng]);
     });
   };
+
+  const searchParams = {
+    sta: ['toLet', 'letAgreed', 'let'],
+    st: 'rent',
+    min: minPrice,
+    max: maxPrice,
+    currency: 'GBP',
+    minbeds: bedrooms[0],
+    maxbeds: bedrooms[1],
+    term: area,
+    radius: radius,
+    runit: 'm',
+    excludePoa: !expoa,
+    pt: 'residential',
+    stygrp: [3, 10, 8, 9, 6, 7, 2],
+    ft: furnished,
+    keywords: keywords
+  };
+
+  if (student) searchParams.excatt = 20;
 
   const searchStarted = () => {
     props.executeSearch(area, searchParams);
@@ -180,9 +172,10 @@ export default function Search(props) {
         callback={bedsChanged}
       />
       <br />
-      <DropDown
+      <MultiDropDown
         label='Furnished'
         values={furnishedOptions}
+        link={furnished}
         callback={furnishedChanged}
       />
       <br />
@@ -195,21 +188,19 @@ export default function Search(props) {
       <ToggleSwitch label='Student' callback={studentChanged} />
       <ToggleSwitch label='Include POA' callback={expoaChanged} />
       <br />
-
-      <br />
-      <Button variant='contained' color='primary' onClick={searchStarted}>
-        Search
-      </Button>
-      <br />
       <GoogleMap
-        range={range}
+        range={radius}
         steps={steps}
         lat={position[0]}
         long={position[1]}
         callback={rangeChanged}
       />
       <br />
-      <p>{JSON.stringify(summary)}</p>
+      <Button variant='contained' color='primary' onClick={searchStarted}>
+        Search
+      </Button>
+      <br />
+      <p>{JSON.stringify(searchParams)}</p>
     </div>
   );
 }

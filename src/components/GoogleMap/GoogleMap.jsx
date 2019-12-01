@@ -19,15 +19,12 @@ export default function GoogleMap(props) {
         setLong(position.coords.longitude);
       });
     } else {
-      console.log(props.lat + ' ' + props.long);
       setLat(props.lat);
       setLong(props.long);
     }
   }, [props.lat, props.long]);
 
   const metersPerPx = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
-
-  console.log(zoom);
 
   const rangeCalc = (props.range * 1609.344) / metersPerPx
 
