@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
@@ -14,12 +16,13 @@ import geocoder from '../../api/geocoder';
 
 import './Search.scss';
 
-export default function Search(props) {  const [area, setArea] = useState('');
-  const [keywords, setKeywords] = useState([]);
-  const [furnished, setFurnished] = useState([]);
+export default function Search(props) {
+  const [area, setArea] = useState('Banbridge');
+  const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
+  const [furnished, setFurnished] = useState(['fullyFurnished','optional','unfurnished']);
   const [bedrooms, setBedrooms] = useState([1, 6]);
-  const [minPrice, setMinPrice] = useState(0.0);
-  const [maxPrice, setMaxPrice] = useState(0.0);
+  const [minPrice, setMinPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState(1000);
   const [student, setStudent] = useState(false);
   const [expoa, setExpoa] = useState(false);
   const [radius, setRadius] = useState(5);
@@ -120,10 +123,14 @@ export default function Search(props) {  const [area, setArea] = useState('');
   };
 
   const areaUnfocused = e => {
-    geocoder.getLLByArea(e.target.value).then(data => {
-      const location = data.results[0].geometry.location;
-      setPosition([location.lat, location.lng]);
-    });
+    if (e.target.value) {
+      geocoder.getLLByArea(e.target.value).then(data => {
+        if (!_.isEmpty(data.results)) {
+          const location = data.results[0].geometry.location;
+          setPosition([location.lat, location.lng]);
+        }
+      });
+    }
   };
 
   const searchParams = {
@@ -154,14 +161,15 @@ export default function Search(props) {  const [area, setArea] = useState('');
     <div className='search-container'>
       <FormTextField
         label='Area'
+        value={area}
         callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
       />
       <br />
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
         <div>
-          <PriceTextField label='Min' callback={minPriceChanged} />
-          <PriceTextField label='Max' callback={maxPriceChanged} />
+          <PriceTextField label='Min' value={minPrice} callback={minPriceChanged} />
+          <PriceTextField label='Max' value={maxPrice} callback={maxPriceChanged} />
         </div>
       </div>
       <br />
@@ -183,6 +191,7 @@ export default function Search(props) {  const [area, setArea] = useState('');
         id='app_keywordinput'
         label='Keywords: '
         callback={keywordListUpdate}
+        value={keywords}
       />
       <br />
       <ToggleSwitch label='Student' callback={studentChanged} />
@@ -194,6 +203,7 @@ export default function Search(props) {  const [area, setArea] = useState('');
         lat={position[0]}
         long={position[1]}
         callback={rangeChanged}
+        value={radius}
       />
       <br />
       <Button variant='contained' color='primary' onClick={searchStarted}>

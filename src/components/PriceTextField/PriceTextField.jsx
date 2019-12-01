@@ -17,6 +17,7 @@ export default function PriceTextField(props) {
         type='number'
         margin='normal'
         className='text-field'
+        value={props.value}
         InputProps={{
           startAdornment: <InputAdornment position='start'>£</InputAdornment>
         }}

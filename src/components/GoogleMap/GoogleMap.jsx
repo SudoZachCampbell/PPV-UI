@@ -57,7 +57,7 @@ export default function GoogleMap(props) {
       <Slider
         orientation='vertical'
         onChange={props.callback}
-        defaultValue={5}
+        defaultValue={props.value}
         min={0.25}
         max={25}
         step={null}

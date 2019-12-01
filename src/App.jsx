@@ -17,6 +17,7 @@ function App(props) {
   };
 
   const finishLoading = returnedSearchResult => {
+    console.log(returnedSearchResult);
     setSearchResult(returnedSearchResult);
     setViewState(2);
 

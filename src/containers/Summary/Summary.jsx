@@ -1,12 +1,9 @@
 import React from 'react';
 import BarGraph from '../../components/BarGraph/BarGraph';
 
-export default class Summary extends React.Component {
+export default function Summary(props) {
 
-  render() {
-    Object.values(this.props.searchResult.keywords).forEach(value => {
-      console.log(value);
-    });
-    return <BarGraph data={Object.values(this.props.searchResult.keywords)} />;
-  }
+  console.log(props.searchResult);
+
+    return <BarGraph data={Object.values(props.searchResult.keywords)} />;
 }

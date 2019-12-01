@@ -6,7 +6,7 @@ export default {
       console.log(`Getting Urls for ${area}`);
       request.post(
         {
-          url: `http://localhost:8080/property/${area}`,
+          url: `http://localhost:8080/property/filtered`,
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(formBody)
         },

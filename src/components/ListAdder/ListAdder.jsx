@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 
 export default function ListAdder(props) {
-  const [inputs, setInputs] = useState([]);
+  const [inputs, setInputs] = useState(props.value);
   const [currentInput, setCurrentInput] = useState('');
 
   const addInputToList = () => {

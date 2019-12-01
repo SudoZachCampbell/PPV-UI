@@ -14,6 +14,7 @@ export default function FormTextField(props) {
           label={props.label}
           onChange={props.callbacks.onChange}
           onBlur={props.callbacks.onBlur}
+          value={props.value}
           margin='normal'
         />
       </FormControl>
