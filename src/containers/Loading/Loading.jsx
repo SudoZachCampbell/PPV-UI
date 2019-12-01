@@ -35,12 +35,9 @@ export default function Loading(props) {
           }
         });
         propertyObject[propertyReturn.id] = propertyReturn;
-        setSearch(propertyObject);
+        setSearch({...propertyObject});
       }
-      console.log(propertyObject);
-      console.log(`Search Finished`);
-      console.log(search);
-      props.finishLoading(search);
+      props.finishLoading(propertyObject);
     };
     searchFunction();
   }, []);
