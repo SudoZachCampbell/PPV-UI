@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 export default function PriceTextField(props) {
 
-    const id = `ptf_${props.label.toLowerCase()}`;
+    const id = `ptf_${props.label.toLowerCase().replace(/\s/g, "")}`;
 
   return (
     <FormControl>

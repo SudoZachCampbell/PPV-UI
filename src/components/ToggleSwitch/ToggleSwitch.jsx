@@ -4,7 +4,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 export default function ToggleSwitch(props) {
-  const id = `toggleswitch_${props.label.toLowerCase().replace(/\s/g, "")}`;
+    const id = `toggleswitch_${props.label.toLowerCase().replace(/\s/g, "")}`;
 
   return (
     <FormControlLabel

@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 export default function FormTextField(props) {
 
-    const id = `search_${props.label.toLowerCase()}`
+    const id = `search_${props.label.toLowerCase().replace(/\s/g, "")}`
 
     return(
         <FormControl className='area-control'>

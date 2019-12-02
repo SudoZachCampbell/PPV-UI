@@ -18,6 +18,7 @@ import './Search.scss';
 
 export default function Search(props) {
   const [area, setArea] = useState('Banbridge');
+  const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let'])
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
   const [furnished, setFurnished] = useState(['fullyFurnished','optional','unfurnished']);
   const [bedrooms, setBedrooms] = useState([1, 6]);
@@ -86,9 +87,27 @@ export default function Search(props) {
     }
   ];
 
+  const rentTypeOptions = [
+    {
+      value: 'toLet',
+      label: 'To Let'
+    },
+    {
+      value: 'let',
+      label: 'Let'
+    },
+    {
+      value: 'letAgreed',
+      label: 'Let Agreed'
+    }
+  ]
   const areaChanged = e => {
     setArea(e.target.value);
   };
+
+  const rentTypeChanged = e => {
+    setRentTypes(e.target.values);
+  }
 
   const keywordListUpdate = keywordList => {
     setKeywords(keywordList);
@@ -164,6 +183,8 @@ export default function Search(props) {
         value={area}
         callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
       />
+      <br />
+      <MultiDropDown label='Rent Type' values={rentTypeOptions} link={rentTypes} callback={rentTypeChanged} />
       <br />
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
