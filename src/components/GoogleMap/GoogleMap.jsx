@@ -33,12 +33,15 @@ export default function GoogleMap(props) {
     height: `${rangeCalc}px`,
     marginLeft: -rangeCalc / 2 + 'px',
     marginTop: -rangeCalc / 2 + 'px',
-    transition: 'all 2s'
+    transition: 'all 1s',
+    backgroundColor: 'none',
+    borderRadius: '50%',
+    display: 'inline-block',
+    border: '2px solid #66ccff'
   };
 
-  const RangeCircle = ({ text }) => (
-    <div className='radius-range' style={mapStyle}></div>
-  );
+//   const RangeCircle = ({ text }) => (
+//   );
 
   const mapChanged = ({ center, zoom, bounds, marginBounds }) => {
       setZoom(zoom);
@@ -52,7 +55,8 @@ export default function GoogleMap(props) {
         zoom={11}
         onChange={mapChanged}
       >
-        <RangeCircle lat={lat} lng={long} text='My Marker' />
+        {/* <RangeCircle lat={lat} lng={long} text='My Marker' /> */}
+        <div lat={lat} lng={long} style={mapStyle}></div>
       </GoogleMapReact>
       <Slider
         orientation='vertical'
