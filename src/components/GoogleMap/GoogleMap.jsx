@@ -7,10 +7,10 @@ import Slider from '@material-ui/core/Slider';
 import './GoogleMap.scss';
 
 export default function GoogleMap(props) {
-
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
   const [zoom, setZoom] = useState(11);
+  const [clickedZoom, setClickedZoom] = useState(true);
 
   useEffect(() => {
     if (!props.lat || !props.long) {
@@ -24,43 +24,48 @@ export default function GoogleMap(props) {
     }
   }, [props.lat, props.long]);
 
-  const metersPerPx = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
+  const metersPerPx =
+    (156543.03392 * Math.cos((lat * Math.PI) / 180)) / Math.pow(2, zoom);
 
-  const rangeCalc = (props.range * 1609.344) / metersPerPx
+  const rangeCalc = (props.range * 1609.344) / metersPerPx;
 
   const mapStyle = {
     width: `${rangeCalc}px`,
     height: `${rangeCalc}px`,
     marginLeft: -rangeCalc / 2 + 'px',
     marginTop: -rangeCalc / 2 + 'px',
-    transition: 'all 1s',
+    transition: clickedZoom ? 'all 0.4s' : 'all 1s',
     backgroundColor: 'none',
     borderRadius: '50%',
     display: 'inline-block',
     border: '2px solid #66ccff'
   };
 
-//   const RangeCircle = ({ text }) => (
-//   );
+  //   const RangeCircle = ({ text }) => (
+  //   );
 
-  const mapChanged = ({ center, zoom, bounds, marginBounds }) => {
-      setZoom(zoom);
-  }
+  const mapChanged = zoom => {
+    setClickedZoom(true);
+    setZoom(zoom);
+  };
 
   return (
     <div className='map'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
         center={{ lat: lat, lng: long }}
-        zoom={11}
-        onChange={mapChanged}
+        zoom={zoom}
+        onZoomAnimationStart={mapChanged}
       >
         {/* <RangeCircle lat={lat} lng={long} text='My Marker' /> */}
         <div lat={lat} lng={long} style={mapStyle}></div>
       </GoogleMapReact>
       <Slider
         orientation='vertical'
-        onChange={props.callback}
+        onChange={(event, value) => {
+          setClickedZoom(false);
+          props.callback(event, value);
+        }}
         defaultValue={props.value}
         min={0.25}
         max={25}
