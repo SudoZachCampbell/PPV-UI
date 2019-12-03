@@ -1,7 +1,7 @@
-import { PageState, types } from '../actions/index';
+import { pageTypes, searchTypes } from '../actions/index';
 
 const initialState = {
-  pageState: PageState.SEARCH,
+  pageState: 0,
   search: {
     sta: [],
     st: 'rent',
@@ -23,17 +23,30 @@ const initialState = {
 
 const search = (state = initialState, action) => {
   switch (action.type) {
-    case types.SET_RENT_TYPES:
-    case types.SET_MIN_PRICE:
-    case types.SET_MAX_PRICE:
-    case types.SET_MIN_BEDS:
-    case types.SET_MAX_BEDS:
-    case types.SET_AREA:
-    case types.SET_RADIUS:
-    case types.SET_EXPOA:
-    case types.SET_HOUSE_STYLE:
-    case types.SET_FURNISHED:
-    case types.SET_KEYWORDS:
+    case searchTypes.SET_RENT_TYPES:
+      return Object.assign({}, state, { search: { ...state.search, sta: action.sta } });
+    case searchTypes.SET_MIN_PRICE:
+      break;
+    case searchTypes.SET_MAX_PRICE:
+      break;
+    case searchTypes.SET_MIN_BEDS:
+      break;
+    case searchTypes.SET_MAX_BEDS:
+      break;
+    case searchTypes.SET_AREA:
+      break;
+    case searchTypes.SET_RADIUS:
+      break;
+    case searchTypes.SET_EXPOA:
+      break;
+    case searchTypes.SET_HOUSE_STYLE:
+      break;
+    case searchTypes.SET_FURNISHED:
+      break;
+    case searchTypes.SET_KEYWORDS:
+      break;
+    case pageTypes.SET_PAGE_STATE:
+      return Object.assign({}, state, { pageState: action.pageState });
     default:
       return state;
   }
