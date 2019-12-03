@@ -8,7 +8,7 @@ import Chip from '@material-ui/core/Chip';
 
 import './MultiDropDown.scss';
 
-const classes =  {
+const classes = {
   formControl: {
     minWidth: 120,
     maxWidth: 300
@@ -28,13 +28,13 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 export default function MultiDropDown(props) {
-  const id = `dropdown_${props.label.toLowerCase().replace(/\s/g, "")}`;
+  const id = `dropdown_${props.label.toLowerCase().replace(/\s/g, '')}`;
   return (
     <div className='select'>
       <FormControl className='select'>

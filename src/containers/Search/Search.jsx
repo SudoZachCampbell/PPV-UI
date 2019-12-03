@@ -8,6 +8,7 @@ import MultiDropDown from '../../components/MultiDropDown/MultiDropDown';
 import FormTextField from '../../components/FormTextField/FormTextField';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
 import HorizontalSlider from '../../components/HorizontalSlider/HorizontalSlider';
+import HouseStyleSelect from '../../components/HouseStyleSelect/HouseStyleSelect';
 import ListAdder from '../../components/ListAdder/ListAdder';
 import PriceTextField from '../../components/PriceTextField/PriceTextField';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
@@ -18,9 +19,13 @@ import './Search.scss';
 
 export default function Search(props) {
   const [area, setArea] = useState('Banbridge');
-  const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let'])
+  const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
-  const [furnished, setFurnished] = useState(['fullyFurnished','optional','unfurnished']);
+  const [furnished, setFurnished] = useState([
+    'fullyFurnished',
+    'optional',
+    'unfurnished'
+  ]);
   const [bedrooms, setBedrooms] = useState([1, 6]);
   const [minPrice, setMinPrice] = useState(100);
   const [maxPrice, setMaxPrice] = useState(1000);
@@ -100,14 +105,14 @@ export default function Search(props) {
       value: 'letAgreed',
       label: 'Let Agreed'
     }
-  ]
+  ];
   const areaChanged = e => {
     setArea(e.target.value);
   };
 
   const rentTypeChanged = e => {
     setRentTypes(e.target.values);
-  }
+  };
 
   const keywordListUpdate = keywordList => {
     setKeywords(keywordList);
@@ -184,15 +189,30 @@ export default function Search(props) {
         callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
       />
       <br />
-      <MultiDropDown label='Rent Type' values={rentTypeOptions} link={rentTypes} callback={rentTypeChanged} />
+      <MultiDropDown
+        label='Rent Type'
+        values={rentTypeOptions}
+        link={rentTypes}
+        callback={rentTypeChanged}
+      />
       <br />
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
         <div>
-          <PriceTextField label='Min' value={minPrice} callback={minPriceChanged} />
-          <PriceTextField label='Max' value={maxPrice} callback={maxPriceChanged} />
+          <PriceTextField
+            label='Min'
+            value={minPrice}
+            callback={minPriceChanged}
+          />
+          <PriceTextField
+            label='Max'
+            value={maxPrice}
+            callback={maxPriceChanged}
+          />
         </div>
       </div>
+      <br />
+      <HouseStyleSelect />
       <br />
       <HorizontalSlider
         label='Bedrooms'

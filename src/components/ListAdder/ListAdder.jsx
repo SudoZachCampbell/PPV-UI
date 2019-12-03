@@ -22,7 +22,7 @@ export default function ListAdder(props) {
   };
 
   useEffect(() => {
-    props.callback(inputs)
+    props.callback(inputs);
   }, [inputs]);
 
   return (

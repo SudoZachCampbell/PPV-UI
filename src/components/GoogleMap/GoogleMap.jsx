@@ -57,8 +57,7 @@ export default function GoogleMap(props) {
         zoom={zoom}
         onZoomAnimationStart={mapChanged}
       >
-        {/* <RangeCircle lat={lat} lng={long} text='My Marker' /> */}
-        <div lat={lat} lng={long} style={mapStyle}></div>
+      <div lat={lat} lng={long} style={mapStyle}></div>
       </GoogleMapReact>
       <Slider
         orientation='vertical'

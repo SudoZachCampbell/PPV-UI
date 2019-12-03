@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
 export default function HorizontalSlider(props) {
-  const id = `hslider_${props.label.toLowerCase().replace(/\s/g, "")}`;
+  const id = `hslider_${props.label.toLowerCase().replace(/\s/g, '')}`;
 
   return (
     <div className='slider'>
