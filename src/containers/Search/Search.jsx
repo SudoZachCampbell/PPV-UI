@@ -34,7 +34,7 @@ export default function Search(props) {
   const [expoa, setExpoa] = useState(false);
   const [radius, setRadius] = useState(5);
   const [position, setPosition] = useState([0, 0]);
-  
+
   const steps = [
     {
       value: 0.25
@@ -149,7 +149,7 @@ export default function Search(props) {
 
   const styleChanged = styleList => {
     setHouseStyle(styleList);
-  }
+  };
 
   const areaUnfocused = e => {
     if (e.target.value) {
