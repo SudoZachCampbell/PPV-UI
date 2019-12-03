@@ -20,6 +20,7 @@ import './Search.scss';
 export default function Search(props) {
   const [area, setArea] = useState('Banbridge');
   const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
+  const [houseStyle, setHouseStyle] = useState([]);
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
   const [furnished, setFurnished] = useState([
     'fullyFurnished',
@@ -33,7 +34,7 @@ export default function Search(props) {
   const [expoa, setExpoa] = useState(false);
   const [radius, setRadius] = useState(5);
   const [position, setPosition] = useState([0, 0]);
-
+  
   const steps = [
     {
       value: 0.25
@@ -111,7 +112,7 @@ export default function Search(props) {
   };
 
   const rentTypeChanged = e => {
-    setRentTypes(e.target.values);
+    setRentTypes(e.target.value);
   };
 
   const keywordListUpdate = keywordList => {
@@ -146,6 +147,10 @@ export default function Search(props) {
     setRadius(newValue);
   };
 
+  const styleChanged = styleList => {
+    setHouseStyle(styleList);
+  }
+
   const areaUnfocused = e => {
     if (e.target.value) {
       geocoder.getLLByArea(e.target.value).then(data => {
@@ -158,7 +163,7 @@ export default function Search(props) {
   };
 
   const searchParams = {
-    sta: ['toLet', 'letAgreed', 'let'],
+    sta: rentTypes,
     st: 'rent',
     min: minPrice,
     max: maxPrice,
@@ -170,7 +175,7 @@ export default function Search(props) {
     runit: 'm',
     excludePoa: !expoa,
     pt: 'residential',
-    stygrp: [3, 10, 8, 9, 6, 7, 2],
+    stygrp: houseStyle,
     ft: furnished,
     keywords: keywords
   };
@@ -212,7 +217,7 @@ export default function Search(props) {
         </div>
       </div>
       <br />
-      <HouseStyleSelect />
+      <HouseStyleSelect callback={styleChanged} />
       <br />
       <HorizontalSlider
         label='Bedrooms'
