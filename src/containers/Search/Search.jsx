@@ -20,7 +20,7 @@ import './Search.scss';
 export default function Search(props) {
   const [area, setArea] = useState('Banbridge');
   const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
-  const [houseStyle, setHouseStyle] = useState([]);
+  const [houseStyle, setHouseStyle] = useState(['2']);
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
   const [furnished, setFurnished] = useState([
     'fullyFurnished',
@@ -217,7 +217,7 @@ export default function Search(props) {
         </div>
       </div>
       <br />
-      <HouseStyleSelect callback={styleChanged} />
+      <HouseStyleSelect preselected={houseStyle} callback={styleChanged} />
       <br />
       <HorizontalSlider
         label='Bedrooms'

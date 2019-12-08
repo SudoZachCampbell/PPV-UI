@@ -1,9 +1,15 @@
 import React from 'react';
-import BarGraph from '../../components/BarGraph/BarGraph';
+import PropertyListItem from '../../components/PropertyListItem/PropertyListItem';
+import _ from 'lodash';
+
+import './Summary.scss';
 
 export default function Summary(props) {
-
-  console.log(props.searchResult);
-
-    return <BarGraph data={Object.values(props.searchResult.keywords)} />;
+  return (
+    <div className='list'>
+      {_.map(props.searchResult.searchResult, (value, key) => {
+        return <PropertyListItem key={key} property={value} />;
+      })}
+    </div>
+  );
 }

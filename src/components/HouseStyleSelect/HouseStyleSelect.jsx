@@ -58,22 +58,37 @@ export default function HouseStyleSelect(props) {
         toggled: false
       }
     };
+    props.preselected.forEach(value => {
+      if (styleOptions[value]) {
+        styleOptions[value].toggled = true;
+      } else {
+        styleOptions.houses[value].toggled = true;
+      }
+    });
     setSelected(styleOptions);
   }, []);
 
   useEffect(() => {
-    const stylesArray = _.reduce(selected, (accum, value, key) => {
-      if (key === 'houses') {
-        let houseArray = _.reduce(value, (innerAccum, innerValue, innerKey) => {
-          if (innerValue.toggled) innerAccum.push(innerKey);
-          return innerAccum;
-        }, []);
-        accum = accum.concat(houseArray)
-      } else {
-        if (value.toggled) accum.push(key);
-      }
-      return accum;
-    }, []);
+    const stylesArray = _.reduce(
+      selected,
+      (accum, value, key) => {
+        if (key === 'houses') {
+          let houseArray = _.reduce(
+            value,
+            (innerAccum, innerValue, innerKey) => {
+              if (innerValue.toggled) innerAccum.push(innerKey);
+              return innerAccum;
+            },
+            []
+          );
+          accum = accum.concat(houseArray);
+        } else {
+          if (value.toggled) accum.push(key);
+        }
+        return accum;
+      },
+      []
+    );
     props.callback(stylesArray);
   }, [selected]);
 
