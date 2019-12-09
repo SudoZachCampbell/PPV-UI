@@ -1,6 +1,13 @@
 .search-container {
-  width: 300px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.search-container > div {
+  margin: 1vh 0;
 }
 
 .slider {

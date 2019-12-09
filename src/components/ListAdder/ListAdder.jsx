@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+import '../FormTextField/FormTextField'
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
+import FormTextField from '../FormTextField/FormTextField';
 
 export default function ListAdder(props) {
   const [inputs, setInputs] = useState(props.value);
@@ -27,11 +29,11 @@ export default function ListAdder(props) {
 
   return (
     <div>
-      <TextField
+      <FormTextField
         id={props.id}
         label='Keywords'
         value={currentInput}
-        onChange={inputTextChange}
+        callbacks={{ onChange: inputTextChange, onBlur: () => {} }}
       />
       <Button variant='outlined' color='primary' onClick={addInputToList}>
         Add

@@ -188,19 +188,21 @@ export default function Search(props) {
 
   return (
     <div className='search-container'>
+      <div>
       <FormTextField
         label='Area'
         value={area}
         callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
       />
-      <br />
+      </div>
+      <div>
       <MultiDropDown
         label='Rent Type'
         values={rentTypeOptions}
         link={rentTypes}
         callback={rentTypeChanged}
       />
-      <br />
+      </div>
       <div className='price-container'>
         <Typography id='discrete-slider'>Price</Typography>
         <div>
@@ -216,33 +218,38 @@ export default function Search(props) {
           />
         </div>
       </div>
-      <br />
+      <div>
       <HouseStyleSelect preselected={houseStyle} callback={styleChanged} />
-      <br />
+      </div>
+      <div>
       <HorizontalSlider
         label='Bedrooms'
         value={bedrooms}
         form={[1, 6, 1]}
         callback={bedsChanged}
       />
-      <br />
+      </div>
+      <div>
       <MultiDropDown
         label='Furnished'
         values={furnishedOptions}
         link={furnished}
         callback={furnishedChanged}
       />
-      <br />
+      </div>
+      <div>
       <ListAdder
         id='app_keywordinput'
         label='Keywords: '
         callback={keywordListUpdate}
         value={keywords}
       />
-      <br />
+      </div>
+      <div>
       <ToggleSwitch label='Student' callback={studentChanged} />
       <ToggleSwitch label='Include POA' callback={expoaChanged} />
-      <br />
+      </div>
+      <div>
       <GoogleMap
         range={radius}
         steps={steps}
@@ -251,12 +258,15 @@ export default function Search(props) {
         callback={rangeChanged}
         value={radius}
       />
-      <br />
+      </div>
+      <div>
       <Button variant='contained' color='primary' onClick={searchStarted}>
         Search
       </Button>
-      <br />
+      </div>
+      <div>
       <p>{JSON.stringify(searchParams)}</p>
+      </div>
     </div>
   );
 }

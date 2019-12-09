@@ -27,13 +27,14 @@ export default function PropertyListItem(props) {
   return (
     <>
       <ExpansionPanel
-        expanded={expanded === `panel${props.property.id}`}
-        onChange={handleChange(`panel${props.property.id}`)}
+        expanded={expanded === `panel${props.key}`}
+        onChange={handleChange(`panel${props.key}`)}
+        TransitionProps={{ unmountOnExit: true }}
       >
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls={`panel${props.property.id}bh-content`}
-          id={`panel${props.property.id}bh-header`}
+          aria-controls={`panel${props.key}bh-content`}
+          id={`panel${props.key}bh-header`}
         >
           <Typography className={classes.heading}>
             {props.property.address}, {props.property.postcode}
