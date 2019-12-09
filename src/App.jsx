@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import Search from './containers/Search/Search';
 import Loading from './containers/Loading/Loading';
 import Summary from './containers/Summary/Summary';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+
+import MenuIcon from '@material-ui/icons/Menu';
 
 import './App.scss';
 
@@ -50,6 +56,14 @@ function App(props) {
 
   return (
     <div className='App'>
+      <AppBar color='primary' position='static'>
+        <Toolbar>
+          <IconButton edge='start' color='inherit' aria-label='menu'>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant='h6'>Property Visualiser</Typography>
+        </Toolbar>
+      </AppBar>
       {view}
     </div>
   );

@@ -21,32 +21,32 @@ const classes = {
 export default function PropertyListItem(props) {
   const [expanded, setExpanded] = React.useState(false);
 
+  console.log(props.id);
+
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
   return (
-    <>
-      <ExpansionPanel
-        expanded={expanded === `panel${props.key}`}
-        onChange={handleChange(`panel${props.key}`)}
-        TransitionProps={{ unmountOnExit: true }}
+    <ExpansionPanel
+      expanded={expanded === `panel${props.id}`}
+      onChange={handleChange(`panel${props.id}`)}
+      TransitionProps={{ unmountOnExit: true }}
+    >
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls={`panel${props.id}bh-content`}
+        id={`panel${props.id}bh-header`}
       >
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`panel${props.key}bh-content`}
-          id={`panel${props.key}bh-header`}
-        >
-          <Typography className={classes.heading}>
-            {props.property.address}, {props.property.postcode}
-          </Typography>
-          <Typography className={classes.secondaryHeading}>
-            {props.property.rent}
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>{props.property.description}</Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </>
+        <Typography className={classes.heading}>
+          {props.property.address}, {props.property.postcode}
+        </Typography>
+        <Typography className={classes.secondaryHeading}>
+          {props.property.rent}
+        </Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <Typography>{props.property.description}</Typography>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }

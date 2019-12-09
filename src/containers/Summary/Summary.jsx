@@ -5,12 +5,12 @@ import _ from 'lodash';
 import './Summary.scss';
 
 export default function Summary(props) {
-  let i = 1;
+  let i = 0;
   return (
     <div className='list'>
       {_.map(props.searchResult.searchResult, (value, key) => {
-        return <PropertyListItem key={i} property={value} />;
         i++;
+        return <PropertyListItem key={i} id={i} property={value} />;
       })}
     </div>
   );

@@ -269,8 +269,8 @@ export default function Search(props) {
       <div>
         <FilterToggle>
           <Fragment label='Toggles'>
-          <ToggleSwitch label='Student' callback={studentChanged} />
-          <ToggleSwitch label='Include POA' callback={expoaChanged} />
+            <ToggleSwitch label='Student' callback={studentChanged} />
+            <ToggleSwitch label='Include POA' callback={expoaChanged} />
           </Fragment>
         </FilterToggle>
       </div>
