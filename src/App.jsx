@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Search from './containers/Search/Search';
 import Loading from './containers/Loading/Loading';
 import Summary from './containers/Summary/Summary';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import './App.scss';
 
@@ -47,7 +48,11 @@ function App(props) {
       break;
   }
 
-  return <div className='App'>{view}</div>;
+  return (
+    <div className='App'>
+      {view}
+    </div>
+  );
 }
 
 export default App;

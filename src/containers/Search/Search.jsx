@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,7 @@ import HouseStyleSelect from '../../components/HouseStyleSelect/HouseStyleSelect
 import ListAdder from '../../components/ListAdder/ListAdder';
 import PriceTextField from '../../components/PriceTextField/PriceTextField';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
+import FilterToggle from '../../components/FilterToggle/FilterToggle';
 
 import geocoder from '../../api/geocoder';
 
@@ -189,83 +190,107 @@ export default function Search(props) {
   return (
     <div className='search-container'>
       <div>
-      <FormTextField
-        label='Area'
-        value={area}
-        callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
-      />
+        <FormTextField
+          label='Area'
+          value={area}
+          callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
+        />
       </div>
       <div>
-      <MultiDropDown
-        label='Rent Type'
-        values={rentTypeOptions}
-        link={rentTypes}
-        callback={rentTypeChanged}
-      />
+        <FilterToggle>
+          <MultiDropDown
+            label='Rent Type'
+            values={rentTypeOptions}
+            link={rentTypes}
+            callback={rentTypeChanged}
+          />
+        </FilterToggle>
       </div>
       <div className='price-container'>
-        <Typography id='discrete-slider'>Price</Typography>
-        <div>
-          <PriceTextField
-            label='Min'
-            value={minPrice}
-            callback={minPriceChanged}
+        <FilterToggle>
+          <Fragment label='Price'>
+            <Typography label='Price' id='discrete-slider'>
+              Price
+            </Typography>
+            <div>
+              <PriceTextField
+                label='Min'
+                value={minPrice}
+                callback={minPriceChanged}
+              />
+              <PriceTextField
+                label='Max'
+                value={maxPrice}
+                callback={maxPriceChanged}
+              />
+            </div>
+          </Fragment>
+        </FilterToggle>
+      </div>
+      <div>
+        <FilterToggle>
+          <HouseStyleSelect
+            label='House Style'
+            preselected={houseStyle}
+            callback={styleChanged}
           />
-          <PriceTextField
-            label='Max'
-            value={maxPrice}
-            callback={maxPriceChanged}
+        </FilterToggle>
+      </div>
+      <div>
+        <FilterToggle>
+          <HorizontalSlider
+            label='Bedrooms'
+            value={bedrooms}
+            form={[1, 6, 1]}
+            callback={bedsChanged}
           />
-        </div>
+        </FilterToggle>
       </div>
       <div>
-      <HouseStyleSelect preselected={houseStyle} callback={styleChanged} />
+        <FilterToggle>
+          <MultiDropDown
+            label='Furnished'
+            values={furnishedOptions}
+            link={furnished}
+            callback={furnishedChanged}
+          />
+        </FilterToggle>
       </div>
       <div>
-      <HorizontalSlider
-        label='Bedrooms'
-        value={bedrooms}
-        form={[1, 6, 1]}
-        callback={bedsChanged}
-      />
+        <FilterToggle>
+          <ListAdder
+            id='app_keywordinput'
+            label='Keywords'
+            callback={keywordListUpdate}
+            value={keywords}
+          />
+        </FilterToggle>
       </div>
       <div>
-      <MultiDropDown
-        label='Furnished'
-        values={furnishedOptions}
-        link={furnished}
-        callback={furnishedChanged}
-      />
+        <FilterToggle>
+          <Fragment label='Toggles'>
+          <ToggleSwitch label='Student' callback={studentChanged} />
+          <ToggleSwitch label='Include POA' callback={expoaChanged} />
+          </Fragment>
+        </FilterToggle>
       </div>
       <div>
-      <ListAdder
-        id='app_keywordinput'
-        label='Keywords: '
-        callback={keywordListUpdate}
-        value={keywords}
-      />
+        <GoogleMap
+          range={radius}
+          steps={steps}
+          lat={position[0]}
+          long={position[1]}
+          callback={rangeChanged}
+          value={radius}
+        />
       </div>
       <div>
-      <ToggleSwitch label='Student' callback={studentChanged} />
-      <ToggleSwitch label='Include POA' callback={expoaChanged} />
+        <Button variant='contained' color='primary' onClick={searchStarted}>
+          Search
+        </Button>
       </div>
       <div>
-      <GoogleMap
-        range={radius}
-        steps={steps}
-        lat={position[0]}
-        long={position[1]}
-        callback={rangeChanged}
-        value={radius}
-      />
-      </div>
-      <div>
-      <Button variant='contained' color='primary' onClick={searchStarted}>
-        Search
-      </Button>
-      </div>
-      <div>
-      <p>{JSON.stringify(searchParams)}</p>
+        <p>{JSON.stringify(searchParams)}</p>
       </div>
     </div>
   );
