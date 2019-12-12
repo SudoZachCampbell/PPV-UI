@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import DoubleArrow from '@material-ui/icons/DoubleArrow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box'
 
 export default function FilterToggle(props) {
   const [toggled, setToggled] = useState(false);
@@ -19,12 +20,12 @@ export default function FilterToggle(props) {
   };
 
   return (
-    <div className={props.outerClass ? props.outerClass : ''}>
+    <Box display='flex' flexDirection='row' className={props.outerClass ? props.outerClass : ''}>
       <Checkbox checked={apply} onChange={applyChanged} />
       <Button onClick={toggleChange}>
         <DoubleArrow color={toggled ? 'primary' : 'secondary'} />
       </Button>
       {toggled ? props.children : <Typography style={{display:'inline'}}>{props.children.props.label}</Typography>}
-    </div>
+    </Box>
   );
 }
