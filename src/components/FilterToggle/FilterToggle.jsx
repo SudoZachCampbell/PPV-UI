@@ -19,12 +19,12 @@ export default function FilterToggle(props) {
   };
 
   return (
-    <>
+    <div className={props.outerClass ? props.outerClass : ''}>
       <Checkbox checked={apply} onChange={applyChanged} />
       <Button onClick={toggleChange}>
         <DoubleArrow color={toggled ? 'primary' : 'secondary'} />
       </Button>
       {toggled ? props.children : <Typography style={{display:'inline'}}>{props.children.props.label}</Typography>}
-    </>
+    </div>
   );
 }
