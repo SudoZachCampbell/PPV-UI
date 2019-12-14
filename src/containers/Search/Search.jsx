@@ -38,6 +38,7 @@ export default function Search(props) {
   const [position, setPosition] = useState([0, 0]);
 
   const [areaFocusedBool, setAreaFocusedBool] = useState(false);
+  const [toggledCount, setToggledCount] = useState(0);
 
   const steps = [
     {
@@ -171,6 +172,11 @@ export default function Search(props) {
     setAreaFocusedBool(false);
   };
 
+  const toggleCounter = increment => {
+    let currentCount = toggledCount + increment;
+    setToggledCount(currentCount);
+  }
+
   const searchParams = {
     sta: rentTypes,
     st: 'rent',
@@ -189,6 +195,11 @@ export default function Search(props) {
     keywords: keywords
   };
 
+  const tracking = {
+    areaFocusedBool,
+    toggledCount
+  }
+
   if (student) searchParams.excatt = 20;
 
   const searchStarted = () => {
@@ -198,7 +209,7 @@ export default function Search(props) {
   return (
     <div id='search_container'>
       <div id='search_filtersbar'>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <MultiDropDown
             label='Rent Type'
             values={rentTypeOptions}
@@ -206,7 +217,7 @@ export default function Search(props) {
             callback={rentTypeChanged}
           />
         </FilterToggle>
-        <FilterToggle divClass='price-container'>
+        <FilterToggle callback={toggleCounter} divClass='price-container'>
           <Fragment label='Price'>
             <Typography label='Price' id='discrete-slider'>
               Price
@@ -225,14 +236,14 @@ export default function Search(props) {
             </div>
           </Fragment>
         </FilterToggle>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <HouseStyleSelect
             label='House Style'
             preselected={houseStyle}
             callback={styleChanged}
           />
         </FilterToggle>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <HorizontalSlider
             label='Bedrooms'
             value={bedrooms}
@@ -240,7 +251,7 @@ export default function Search(props) {
             callback={bedsChanged}
           />
         </FilterToggle>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <MultiDropDown
             label='Furnished'
             values={furnishedOptions}
@@ -248,7 +259,7 @@ export default function Search(props) {
             callback={furnishedChanged}
           />
         </FilterToggle>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <ListAdder
             id='app_keywordinput'
             label='Keywords'
@@ -256,12 +267,25 @@ export default function Search(props) {
             value={keywords}
           />
         </FilterToggle>
-        <FilterToggle>
+        <FilterToggle callback={toggleCounter}>
           <Fragment label='Toggles'>
             <ToggleSwitch label='Student' callback={studentChanged} />
             <ToggleSwitch label='Include POA' callback={expoaChanged} />
           </Fragment>
         </FilterToggle>
+        <div id='search_controls'>
+        <div>
+          <Button variant='contained' color='primary' onClick={searchStarted}>
+            Search
+          </Button>
+        </div>
+        <div>
+          <p>{JSON.stringify(searchParams)}</p>
+        </div>
+        <div>
+          <p>{JSON.stringify(tracking)}</p>
+        </div>
+      </div>
       </div>
       <div id='search_inputs'>
         <ClickAwayListener onClickAway={areaUnfocused}>
@@ -289,15 +313,7 @@ export default function Search(props) {
           </div>
         </ClickAwayListener>
         <div>
-          <Button variant='contained' color='primary' onClick={searchStarted}>
-            Search
-          </Button>
-        </div>
-        <div>
-          <p>{JSON.stringify(searchParams)}</p>
-        </div>
-        <div>
-          <p>{JSON.stringify(areaFocusedBool)}</p>
+          {toggledCount === 0 && <p>Test</p>}
         </div>
       </div>
     </div>

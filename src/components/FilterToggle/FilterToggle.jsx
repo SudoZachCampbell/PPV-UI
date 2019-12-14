@@ -14,6 +14,7 @@ export default function FilterToggle(props) {
 
   const toggleChange = () => {
     (!apply && !toggled) && setApply(true); 
+    props.callback(!toggled ? 1 : -1);
     setToggled(!toggled);
   };
 
