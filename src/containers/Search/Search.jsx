@@ -1,19 +1,20 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, Suspense } from 'react';
 import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
 
-import MultiDropDown from '../../components/MultiDropDown/MultiDropDown';
+import FilterToggle from '../../components/FilterToggle/FilterToggle';
 import FormTextField from '../../components/FormTextField/FormTextField';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
 import HorizontalSlider from '../../components/HorizontalSlider/HorizontalSlider';
 import HouseStyleSelect from '../../components/HouseStyleSelect/HouseStyleSelect';
 import ListAdder from '../../components/ListAdder/ListAdder';
+import MultiDropDown from '../../components/MultiDropDown/MultiDropDown';
 import PriceTextField from '../../components/PriceTextField/PriceTextField';
+import QuickStats from '../../components/QuickStats/QuickStats';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
-import FilterToggle from '../../components/FilterToggle/FilterToggle';
 
 import geocoder from '../../api/geocoder';
 
@@ -175,7 +176,7 @@ export default function Search(props) {
   const toggleCounter = increment => {
     let currentCount = toggledCount + increment;
     setToggledCount(currentCount);
-  }
+  };
 
   const searchParams = {
     sta: rentTypes,
@@ -198,7 +199,7 @@ export default function Search(props) {
   const tracking = {
     areaFocusedBool,
     toggledCount
-  }
+  };
 
   if (student) searchParams.excatt = 20;
 
@@ -274,18 +275,18 @@ export default function Search(props) {
           </Fragment>
         </FilterToggle>
         <div id='search_controls'>
-        <div>
-          <Button variant='contained' color='primary' onClick={searchStarted}>
-            Search
-          </Button>
+          <div>
+            <Button variant='contained' color='primary' onClick={searchStarted}>
+              Search
+            </Button>
+          </div>
+          <div>
+            <p>{JSON.stringify(searchParams)}</p>
+          </div>
+          <div>
+            <p>{JSON.stringify(tracking)}</p>
+          </div>
         </div>
-        <div>
-          <p>{JSON.stringify(searchParams)}</p>
-        </div>
-        <div>
-          <p>{JSON.stringify(tracking)}</p>
-        </div>
-      </div>
       </div>
       <div id='search_inputs'>
         <ClickAwayListener onClickAway={areaUnfocused}>
@@ -313,7 +314,13 @@ export default function Search(props) {
           </div>
         </ClickAwayListener>
         <div>
-          {toggledCount === 0 && <p>Test</p>}
+          {toggledCount === 0 && (
+            // <Suspense fallback={<h1>Loading...</h1>}>
+            <>
+              <p>yes</p>
+              <QuickStats toggled={toggledCount} areaFocused={areaFocusedBool} query={searchParams} />
+            </>
+          )}
         </div>
       </div>
     </div>

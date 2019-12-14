@@ -59,5 +59,22 @@ export default {
         }
       );
     });
+  },
+
+  getPropertyCount: formBody => {
+    return new Promise((resolve, reject) => {
+      request.post({
+        url: 'http://localhost:8080/property/count',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(formBody)
+      },
+      (error, response, body) => {
+        if(error) {
+          reject(error);
+        } else {
+          resolve(body);
+        }
+      })
+    });
   }
 };
