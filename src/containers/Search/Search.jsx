@@ -189,15 +189,7 @@ export default function Search(props) {
 
   return (
     <div id='search_container'>
-      <div id='search_filtersbar'></div>
-      <div id='search_inputs'>
-        <div>
-          <FormTextField
-            label='Area'
-            value={area}
-            callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
-          />
-        </div>
+      <div id='search_filtersbar'>
         <FilterToggle>
           <MultiDropDown
             label='Rent Type'
@@ -262,16 +254,23 @@ export default function Search(props) {
             <ToggleSwitch label='Include POA' callback={expoaChanged} />
           </Fragment>
         </FilterToggle>
+      </div>
+      <div id='search_inputs'>
         <div>
-          <GoogleMap
-            range={radius}
-            steps={steps}
-            lat={position[0]}
-            long={position[1]}
-            callback={rangeChanged}
-            value={radius}
+          <FormTextField
+            label='Area'
+            value={area}
+            callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
           />
         </div>
+        <GoogleMap
+          range={radius}
+          steps={steps}
+          lat={position[0]}
+          long={position[1]}
+          callback={rangeChanged}
+          value={radius}
+        />
         <div>
           <Button variant='contained' color='primary' onClick={searchStarted}>
             Search

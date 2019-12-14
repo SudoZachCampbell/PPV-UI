@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import GoogleMapReact from 'google-map-react';
 
+import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 
 import './GoogleMap.scss';
 
@@ -50,16 +52,17 @@ export default function GoogleMap(props) {
   };
 
   return (
-    <div className='map'>
+    <Paper className='map'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
         center={{ lat: lat, lng: long }}
         zoom={zoom}
         onZoomAnimationStart={mapChanged}
       >
-      <div lat={lat} lng={long} style={mapStyle}></div>
+        <div lat={lat} lng={long} style={mapStyle}></div>
       </GoogleMapReact>
       <Slider
+        id='map_slider'
         orientation='vertical'
         onChange={(event, value) => {
           setClickedZoom(false);
@@ -71,7 +74,11 @@ export default function GoogleMap(props) {
         step={null}
         marks={props.steps}
         valueLabelDisplay='auto'
+        aria-labelledby='vertical-slider'
       />
-    </div>
+      <Typography id='vertical-slider' gutterBottom>
+        Range
+      </Typography>
+    </Paper>
   );
 }

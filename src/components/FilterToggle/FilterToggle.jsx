@@ -6,6 +6,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 
+import './FilterToggle.scss';
+
 export default function FilterToggle(props) {
   const [toggled, setToggled] = useState(false);
   const [apply, setApply] = useState(false);
@@ -20,7 +22,7 @@ export default function FilterToggle(props) {
   };
 
   return (
-    <Box display='flex' flexDirection='row' className={props.outerClass ? props.outerClass : ''}>
+    <Box display='flex' flexDirection='row' className={props.outerClass ? props.outerClass + ' box-index' : 'box-index'}>
       <Checkbox checked={apply} onChange={applyChanged} />
       <Button onClick={toggleChange}>
         <DoubleArrow color={toggled ? 'primary' : 'secondary'} />

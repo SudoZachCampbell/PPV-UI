@@ -1,3 +1,13 @@
-.radius-range {
+.map {
+  height: 30vh;
+  width: 30vw;
+  display: flex;
+  padding: 2vh 2vw;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+}
 
+#map_slider {
+    margin-left: 1vw;
 }
