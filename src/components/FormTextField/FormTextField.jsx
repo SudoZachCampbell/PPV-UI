@@ -14,6 +14,7 @@ export default function FormTextField(props) {
         id={id}
         label={props.label}
         onChange={props.callbacks.onChange}
+        onFocus={props.callbacks.onFocus}
         onBlur={props.callbacks.onBlur}
         className='text-field'
         value={props.value}

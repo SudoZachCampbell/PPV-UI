@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
 
 import MultiDropDown from '../../components/MultiDropDown/MultiDropDown';
@@ -35,6 +36,8 @@ export default function Search(props) {
   const [expoa, setExpoa] = useState(false);
   const [radius, setRadius] = useState(5);
   const [position, setPosition] = useState([0, 0]);
+
+  const [areaFocusedBool, setAreaFocusedBool] = useState(false);
 
   const steps = [
     {
@@ -152,7 +155,7 @@ export default function Search(props) {
     setHouseStyle(styleList);
   };
 
-  const areaUnfocused = e => {
+  const areaFocused = e => {
     if (e.target.value) {
       geocoder.getLLByArea(e.target.value).then(data => {
         if (!_.isEmpty(data.results)) {
@@ -161,6 +164,11 @@ export default function Search(props) {
         }
       });
     }
+    setAreaFocusedBool(true);
+  };
+
+  const areaUnfocused = () => {
+    setAreaFocusedBool(false);
   };
 
   const searchParams = {
@@ -256,21 +264,30 @@ export default function Search(props) {
         </FilterToggle>
       </div>
       <div id='search_inputs'>
-        <div>
-          <FormTextField
-            label='Area'
-            value={area}
-            callbacks={{ onChange: areaChanged, onBlur: areaUnfocused }}
-          />
-        </div>
-        <GoogleMap
-          range={radius}
-          steps={steps}
-          lat={position[0]}
-          long={position[1]}
-          callback={rangeChanged}
-          value={radius}
-        />
+        <ClickAwayListener onClickAway={areaUnfocused}>
+          <div>
+            <div>
+              <FormTextField
+                label='Area'
+                value={area}
+                callbacks={{
+                  onChange: areaChanged,
+                  onFocus: areaFocused
+                }}
+              />
+            </div>
+            {areaFocusedBool && (
+              <GoogleMap
+                range={radius}
+                steps={steps}
+                lat={position[0]}
+                long={position[1]}
+                callback={rangeChanged}
+                value={radius}
+              />
+            )}
+          </div>
+        </ClickAwayListener>
         <div>
           <Button variant='contained' color='primary' onClick={searchStarted}>
             Search
@@ -278,6 +295,9 @@ export default function Search(props) {
         </div>
         <div>
           <p>{JSON.stringify(searchParams)}</p>
+        </div>
+        <div>
+          <p>{JSON.stringify(areaFocusedBool)}</p>
         </div>
       </div>
     </div>
