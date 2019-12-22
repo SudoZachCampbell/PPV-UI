@@ -317,7 +317,6 @@ export default function Search(props) {
           {toggledCount === 0 && (
             // <Suspense fallback={<h1>Loading...</h1>}>
             <>
-              <p>yes</p>
               <QuickStats toggled={toggledCount} areaFocused={areaFocusedBool} query={searchParams} />
             </>
           )}

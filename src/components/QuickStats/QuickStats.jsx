@@ -10,10 +10,20 @@ export default function QuickStats(props) {
       console.log(`Toggled: ${props.toggled}, Area: ${props.areaFocused}`);
       getProperty.getPropertyCount(props.query).then(data => {
         let dataObject = JSON.parse(data);
-        setCount(dataObject.propertyCount);
+        if (dataObject.propertyCount) {
+          setCount(dataObject.propertyCount);
+        } else {
+          setCount('empty');
+        }
       });
     }
   }, [props.toggled, props.areaChanged]);
 
-  return <h1>{count}</h1>;
+  return !count ? (
+    <h1>Loading Number of Properties...</h1>
+  ) : count === 'empty' ? (
+    <h1>No Properties Found</h1>
+  ) : (
+    <h1>{count}</h1>
+  );
 }
