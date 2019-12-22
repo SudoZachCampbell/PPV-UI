@@ -9,7 +9,7 @@ export default function ToggleSwitch(props) {
   return (
     <FormControlLabel
       id={id}
-      control={<Switch onChange={props.callback} color='primary' />}
+      control={<Switch checked={props.value} onChange={props.callback} color='primary' />}
       label={props.label}
       labelPlacement='start'
     />

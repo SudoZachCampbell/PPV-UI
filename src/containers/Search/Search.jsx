@@ -270,8 +270,8 @@ export default function Search(props) {
         </FilterToggle>
         <FilterToggle callback={toggleCounter}>
           <Fragment label='Toggles'>
-            <ToggleSwitch label='Student' callback={studentChanged} />
-            <ToggleSwitch label='Include POA' callback={expoaChanged} />
+            <ToggleSwitch label='Student' value={student} callback={studentChanged} />
+            <ToggleSwitch label='Include POA' value={expoa} callback={expoaChanged} />
           </Fragment>
         </FilterToggle>
         <div id='search_controls'>
@@ -320,7 +320,7 @@ export default function Search(props) {
           )}
         </div>
         <div>
-          <div style={{ width: '10vw' }}>
+          <div>
             <p>{JSON.stringify(searchParams)}</p>
           </div>
           <div>
