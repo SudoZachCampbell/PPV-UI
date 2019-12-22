@@ -280,12 +280,6 @@ export default function Search(props) {
               Search
             </Button>
           </div>
-          <div>
-            <p>{JSON.stringify(searchParams)}</p>
-          </div>
-          <div>
-            <p>{JSON.stringify(tracking)}</p>
-          </div>
         </div>
       </div>
       <div id='search_inputs'>
@@ -317,9 +311,21 @@ export default function Search(props) {
           {toggledCount === 0 && (
             // <Suspense fallback={<h1>Loading...</h1>}>
             <>
-              <QuickStats toggled={toggledCount} areaFocused={areaFocusedBool} query={searchParams} />
+              <QuickStats
+                toggled={toggledCount}
+                areaFocused={areaFocusedBool}
+                query={searchParams}
+              />
             </>
           )}
+        </div>
+        <div>
+          <div style={{ width: '10vw' }}>
+            <p>{JSON.stringify(searchParams)}</p>
+          </div>
+          <div>
+            <p>{JSON.stringify(tracking)}</p>
+          </div>
         </div>
       </div>
     </div>
