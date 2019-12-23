@@ -12,10 +12,13 @@ import './FilterToggle.scss';
 import { orange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
-  box: {
-    width: '6.5vw',
-    height: '6.5vw',
-    backgroundColor: 'orange'
+  arrow: {
+    width: '2vw',
+    height: '8vh',
+    backgroundColor: 'grey'
+  },
+  arrowFlipped: {
+    transform: 'scaleX(-1)'
   }
 });
 
@@ -43,18 +46,26 @@ export default function FilterToggle(props) {
         props.outerClass ? props.outerClass + ' box-index' : 'box-index'
       }
     >
-      <div className={classes.box}>
-        <Checkbox checked={apply} onChange={applyChanged} />
-        <Button onClick={toggleChange}>
-          <DoubleArrow color={toggled ? 'primary' : 'secondary'} />
-        </Button>
-      </div>
+      <Checkbox checked={apply} onChange={applyChanged} />
       {toggled ? (
-        props.children
+        <>
+          {props.children}
+          <Button onClick={toggleChange}>
+            <DoubleArrow
+              className={[classes.arrow, classes.arrowFlipped]}
+              color='secondary'
+            />
+          </Button>
+        </>
       ) : (
-        <Typography style={{ display: 'inline' }}>
-          {props.children.props.label}
-        </Typography>
+        <>
+          <Button onClick={toggleChange}>
+            <DoubleArrow className={classes.arrow} color='primary' />
+          </Button>
+          <Typography style={{ display: 'inline' }}>
+            {props.children.props.label}
+          </Typography>
+        </>
       )}
     </Box>
   );
