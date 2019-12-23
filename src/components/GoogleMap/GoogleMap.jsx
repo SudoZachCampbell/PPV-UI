@@ -54,6 +54,7 @@ export default function GoogleMap(props) {
   return (
     <Paper className='map'>
       <GoogleMapReact
+        id='google-map'
         bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
         center={{ lat: lat, lng: long }}
         zoom={zoom}
@@ -61,9 +62,11 @@ export default function GoogleMap(props) {
       >
         <div lat={lat} lng={long} style={mapStyle}></div>
       </GoogleMapReact>
+      <Typography id='vertical-slider' gutterBottom>
+        Range
+      </Typography>
       <Slider
         id='map_slider'
-        orientation='vertical'
         onChange={(event, value) => {
           setClickedZoom(false);
           props.callback(event, value);
@@ -73,12 +76,9 @@ export default function GoogleMap(props) {
         max={25}
         step={null}
         marks={props.steps}
-        valueLabelDisplay='auto'
         aria-labelledby='vertical-slider'
+        valueLabelDisplay='auto'
       />
-      <Typography id='vertical-slider' gutterBottom>
-        Range
-      </Typography>
     </Paper>
   );
 }

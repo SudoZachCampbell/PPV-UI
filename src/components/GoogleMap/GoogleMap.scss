@@ -1,13 +1,18 @@
 .map {
   height: 30vh;
-  width: 30vw;
-  display: flex;
-  padding: 2vh 2vw;
+  width: 100vw;
+  padding-bottom: 8vh;
+  margin-top: 2vh;
   background-color: white;
-  position: relative;
+  position: absolute;
   z-index: 2;
 }
 
+#vertical-slider {
+    margin-top: 1vh;
+}
+
 #map_slider {
-    margin-left: 1vw;
+width: 80%;
+    margin-top: 0;
 }

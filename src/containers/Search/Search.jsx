@@ -20,26 +20,42 @@ import geocoder from '../../api/geocoder';
 
 import './Search.scss';
 
+const filters = {
+  term: false,
+  sta: false,
+  stygrp: false,
+  keywords: false,
+  ft: false,
+  bedrooms: false,
+  min: false,
+  max: false,
+  student: false,
+  excludePoa: false
+};
+
 export default function Search(props) {
-  const [area, setArea] = useState('Banbridge');
-  const [rentTypes, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
-  const [houseStyle, setHouseStyle] = useState(['2']);
+  const [term, setArea] = useState('Banbridge');
+  const [sta, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
+  const [stygrp, setHouseStyle] = useState(['2']);
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
-  const [furnished, setFurnished] = useState([
+  const [ft, setFurnished] = useState([
     'fullyFurnished',
     'optional',
     'unfurnished'
   ]);
-  const [bedrooms, setBedrooms] = useState([1, 6]);
-  const [minPrice, setMinPrice] = useState(100);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [minbeds, setMinBeds] = useState(1);
+  const [maxbeds, setMaxBeds] = useState(6);
+  const [min, setMinPrice] = useState(100);
+  const [max, setMaxPrice] = useState(1000);
   const [student, setStudent] = useState(false);
-  const [expoa, setExpoa] = useState(false);
+  const [excludePoa, setExpoa] = useState(false);
   const [radius, setRadius] = useState(5);
   const [position, setPosition] = useState([0, 0]);
 
   const [areaFocusedBool, setAreaFocusedBool] = useState(false);
   const [toggledCount, setToggledCount] = useState(0);
+
+  const [checkedFilters, setCheckedFilters] = useState(filters);
 
   const steps = [
     {
@@ -146,7 +162,8 @@ export default function Search(props) {
   };
 
   const bedsChanged = (e, newValue) => {
-    setBedrooms(newValue);
+    setMinBeds(newValue[0]);
+    setMaxBeds(newValue[1]);
   };
 
   const rangeChanged = (e, newValue) => {
@@ -169,32 +186,46 @@ export default function Search(props) {
     setAreaFocusedBool(true);
   };
 
-  const areaUnfocused = () => {
-    setAreaFocusedBool(false);
+  const areaUnfocused = e => {
+    if (e.target.value) {
+      geocoder.getLLByArea(e.target.value).then(data => {
+        if (!_.isEmpty(data.results)) {
+          const location = data.results[0].geometry.location;
+          setPosition([location.lat, location.lng]);
+        }
+      });
+    }
   };
 
-  const toggleCounter = increment => {
+  const toggleCounter = (increment) => {
     let currentCount = toggledCount + increment;
     setToggledCount(currentCount);
   };
 
   const searchParams = {
-    sta: rentTypes,
     st: 'rent',
-    min: minPrice,
-    max: maxPrice,
     currency: 'GBP',
-    minbeds: bedrooms[0],
-    maxbeds: bedrooms[1],
-    term: area,
-    radius: radius,
     runit: 'm',
-    excludePoa: !expoa,
     pt: 'residential',
-    stygrp: houseStyle,
-    ft: furnished,
-    keywords: keywords
   };
+
+  const valueStore = {
+    sta: sta,
+    min: min,
+    max: max,
+    minbeds: minbeds,
+    maxbeds: maxbeds,
+    term: term,
+    radius: radius,
+    excludePoa: excludePoa,
+    stygrp: stygrp,
+    ft: ft,
+    keywords: keywords
+  }
+
+  _.forEach(checkedFilters, (value, key) => {
+    if(value) searchParams[key] = valueStore[key];
+  });
 
   const tracking = {
     areaFocusedBool,
@@ -204,21 +235,22 @@ export default function Search(props) {
   if (student) searchParams.excatt = 20;
 
   const searchStarted = () => {
-    props.executeSearch(area, searchParams);
+    props.executeSearch(term, searchParams);
   };
 
   return (
     <div id='search_container'>
       <div id='search_top'>
-        <ClickAwayListener onClickAway={areaUnfocused}>
+        <ClickAwayListener onClickAway={() => setAreaFocusedBool(false)}>
           <div>
             <div>
               <FormTextField
                 label='Area'
-                value={area}
+                value={term}
                 callbacks={{
                   onChange: areaChanged,
-                  onFocus: areaFocused
+                  onFocus: areaFocused,
+                  onBlur: areaUnfocused
                 }}
               />
             </div>
@@ -240,7 +272,7 @@ export default function Search(props) {
           <MultiDropDown
             label='Rent Type'
             values={rentTypeOptions}
-            link={rentTypes}
+            link={sta}
             callback={rentTypeChanged}
           />
         </FilterToggle>
@@ -252,12 +284,12 @@ export default function Search(props) {
             <div>
               <PriceTextField
                 label='Min'
-                value={minPrice}
+                value={min}
                 callback={minPriceChanged}
               />
               <PriceTextField
                 label='Max'
-                value={maxPrice}
+                value={max}
                 callback={maxPriceChanged}
               />
             </div>
@@ -266,14 +298,14 @@ export default function Search(props) {
         <FilterToggle callback={toggleCounter}>
           <HouseStyleSelect
             label='House Style'
-            preselected={houseStyle}
+            preselected={stygrp}
             callback={styleChanged}
           />
         </FilterToggle>
         <FilterToggle callback={toggleCounter}>
           <HorizontalSlider
             label='Bedrooms'
-            value={bedrooms}
+            value={[minbeds,maxbeds]}
             form={[1, 6, 1]}
             callback={bedsChanged}
           />
@@ -282,7 +314,7 @@ export default function Search(props) {
           <MultiDropDown
             label='Furnished'
             values={furnishedOptions}
-            link={furnished}
+            link={ft}
             callback={furnishedChanged}
           />
         </FilterToggle>
@@ -302,8 +334,8 @@ export default function Search(props) {
               callback={studentChanged}
             />
             <ToggleSwitch
-              label='Include POA'
-              value={expoa}
+              label='Exclude POA'
+              value={excludePoa}
               callback={expoaChanged}
             />
           </Fragment>
