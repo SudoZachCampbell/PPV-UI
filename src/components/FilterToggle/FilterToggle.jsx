@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   arrow: {
     width: '2vw',
     height: '8vh',
-    backgroundColor: 'grey'
+    transition: 'all 0.3s'
   },
   arrowFlipped: {
     transform: 'scaleX(-1)'
@@ -48,25 +48,25 @@ export default function FilterToggle(props) {
     >
       <Checkbox checked={apply} onChange={applyChanged} />
       {toggled ? (
-        <>
-          {props.children}
-          <Button onClick={toggleChange}>
-            <DoubleArrow
-              className={[classes.arrow, classes.arrowFlipped]}
-              color='secondary'
-            />
-          </Button>
-        </>
+        <>{props.children}</>
       ) : (
         <>
-          <Button onClick={toggleChange}>
+          {/* <Button onClick={toggleChange}>
             <DoubleArrow className={classes.arrow} color='primary' />
           </Button>
           <Typography style={{ display: 'inline' }}>
             {props.children.props.label}
-          </Typography>
+          </Typography> */}
         </>
       )}
+      <Button onClick={toggleChange}>
+        <DoubleArrow
+          className={
+            toggled ? [classes.arrow, classes.arrowFlipped] : classes.arrow
+          }
+          color={toggled ? 'primary' : 'secondary'}
+        />
+      </Button>
     </Box>
   );
 }

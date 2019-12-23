@@ -209,6 +209,32 @@ export default function Search(props) {
 
   return (
     <div id='search_container'>
+      <div id='search_top'>
+        <ClickAwayListener onClickAway={areaUnfocused}>
+          <div>
+            <div>
+              <FormTextField
+                label='Area'
+                value={area}
+                callbacks={{
+                  onChange: areaChanged,
+                  onFocus: areaFocused
+                }}
+              />
+            </div>
+            {areaFocusedBool && (
+              <GoogleMap
+                range={radius}
+                steps={steps}
+                lat={position[0]}
+                long={position[1]}
+                callback={rangeChanged}
+                value={radius}
+              />
+            )}
+          </div>
+        </ClickAwayListener>
+      </div>
       <div id='search_filtersbar'>
         <FilterToggle callback={toggleCounter}>
           <MultiDropDown
@@ -270,43 +296,18 @@ export default function Search(props) {
         </FilterToggle>
         <FilterToggle callback={toggleCounter}>
           <Fragment label='Toggles'>
-            <ToggleSwitch label='Student' value={student} callback={studentChanged} />
-            <ToggleSwitch label='Include POA' value={expoa} callback={expoaChanged} />
+            <ToggleSwitch
+              label='Student'
+              value={student}
+              callback={studentChanged}
+            />
+            <ToggleSwitch
+              label='Include POA'
+              value={expoa}
+              callback={expoaChanged}
+            />
           </Fragment>
         </FilterToggle>
-        <div id='search_controls'>
-          <div>
-            <Button variant='contained' color='primary' onClick={searchStarted}>
-              Search
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div id='search_inputs'>
-        <ClickAwayListener onClickAway={areaUnfocused}>
-          <div>
-            <div>
-              <FormTextField
-                label='Area'
-                value={area}
-                callbacks={{
-                  onChange: areaChanged,
-                  onFocus: areaFocused
-                }}
-              />
-            </div>
-            {areaFocusedBool && (
-              <GoogleMap
-                range={radius}
-                steps={steps}
-                lat={position[0]}
-                long={position[1]}
-                callback={rangeChanged}
-                value={radius}
-              />
-            )}
-          </div>
-        </ClickAwayListener>
         <div>
           {toggledCount === 0 && (
             // <Suspense fallback={<h1>Loading...</h1>}>
@@ -319,7 +320,14 @@ export default function Search(props) {
             </>
           )}
         </div>
+      </div>
+      <div id='search_bottom'>
         <div>
+          <div>
+            <Button variant='contained' color='primary' onClick={searchStarted}>
+              Search
+            </Button>
+          </div>
           <div>
             <p>{JSON.stringify(searchParams)}</p>
           </div>
