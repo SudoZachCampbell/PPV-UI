@@ -197,16 +197,29 @@ export default function Search(props) {
     }
   };
 
-  const toggleCounter = (increment) => {
+  const toggleCounter = increment => {
     let currentCount = toggledCount + increment;
     setToggledCount(currentCount);
+    // setCheckedFilters(() => {
+    //   return { ...checkedFilters, [key]: !checkedFilters[key] };
+    // });
   };
 
+  const toggleCheckbox = (id, apply) => {
+    const keys = id.split('_');
+    let newFilters = { ...checkedFilters };
+    keys.forEach(key => {
+      newFilters[key] = apply;
+    });
+    setCheckedFilters(() => {
+      return newFilters;
+    });
+  };
   const searchParams = {
     st: 'rent',
     currency: 'GBP',
     runit: 'm',
-    pt: 'residential',
+    pt: 'residential'
   };
 
   const valueStore = {
@@ -221,10 +234,10 @@ export default function Search(props) {
     stygrp: stygrp,
     ft: ft,
     keywords: keywords
-  }
+  };
 
   _.forEach(checkedFilters, (value, key) => {
-    if(value) searchParams[key] = valueStore[key];
+    if (value) searchParams[key] = valueStore[key];
   });
 
   const tracking = {
@@ -268,7 +281,7 @@ export default function Search(props) {
         </ClickAwayListener>
       </div>
       <div id='search_filtersbar'>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle id='sta' callback={{ toggleCounter, toggleCheckbox }}>
           <MultiDropDown
             label='Rent Type'
             values={rentTypeOptions}
@@ -276,7 +289,11 @@ export default function Search(props) {
             callback={rentTypeChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={toggleCounter} divClass='price-container'>
+        <FilterToggle
+          id='min_max'
+          callback={{ toggleCounter, toggleCheckbox }}
+          divClass='price-container'
+        >
           <Fragment label='Price'>
             <Typography label='Price' id='discrete-slider'>
               Price
@@ -295,22 +312,22 @@ export default function Search(props) {
             </div>
           </Fragment>
         </FilterToggle>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
           <HouseStyleSelect
             label='House Style'
             preselected={stygrp}
             callback={styleChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
           <HorizontalSlider
             label='Bedrooms'
-            value={[minbeds,maxbeds]}
+            value={[minbeds, maxbeds]}
             form={[1, 6, 1]}
             callback={bedsChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
           <MultiDropDown
             label='Furnished'
             values={furnishedOptions}
@@ -318,7 +335,7 @@ export default function Search(props) {
             callback={furnishedChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
           <ListAdder
             id='app_keywordinput'
             label='Keywords'
@@ -326,7 +343,7 @@ export default function Search(props) {
             value={keywords}
           />
         </FilterToggle>
-        <FilterToggle callback={toggleCounter}>
+        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
           <Fragment label='Toggles'>
             <ToggleSwitch
               label='Student'

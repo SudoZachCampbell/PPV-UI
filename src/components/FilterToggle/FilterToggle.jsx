@@ -29,17 +29,19 @@ export default function FilterToggle(props) {
   const classes = useStyles();
 
   const toggleChange = () => {
-    !apply && !toggled && setApply(true);
-    props.callback(!toggled ? 1 : -1);
+    !apply && !toggled && applyChanged();
+    props.callback.toggleCounter(props.id, !toggled ? 1 : -1);
     setToggled(!toggled);
   };
 
   const applyChanged = () => {
+    props.callback.toggleCheckbox(props.id, !apply);
     setApply(!apply);
   };
 
   return (
     <Box
+      id={`filter_${props.id}`}
       display='flex'
       flexDirection='row'
       className={
