@@ -281,7 +281,11 @@ export default function Search(props) {
         </ClickAwayListener>
       </div>
       <div id='search_filtersbar'>
-        <FilterToggle id='sta' callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='sta'
+          id='sta'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <MultiDropDown
             label='Rent Type'
             values={rentTypeOptions}
@@ -290,6 +294,7 @@ export default function Search(props) {
           />
         </FilterToggle>
         <FilterToggle
+          key='min_max'
           id='min_max'
           callback={{ toggleCounter, toggleCheckbox }}
           divClass='price-container'
@@ -312,14 +317,22 @@ export default function Search(props) {
             </div>
           </Fragment>
         </FilterToggle>
-        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='house_style'
+          id='house_style'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <HouseStyleSelect
             label='House Style'
             preselected={stygrp}
             callback={styleChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='bedrooms'
+          id='bedrooms'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <HorizontalSlider
             label='Bedrooms'
             value={[minbeds, maxbeds]}
@@ -327,7 +340,11 @@ export default function Search(props) {
             callback={bedsChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='furnished'
+          id='furnishec'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <MultiDropDown
             label='Furnished'
             values={furnishedOptions}
@@ -335,7 +352,11 @@ export default function Search(props) {
             callback={furnishedChanged}
           />
         </FilterToggle>
-        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='keywords'
+          id='keywords'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <ListAdder
             id='app_keywordinput'
             label='Keywords'
@@ -343,7 +364,11 @@ export default function Search(props) {
             value={keywords}
           />
         </FilterToggle>
-        <FilterToggle callback={{ toggleCounter, toggleCheckbox }}>
+        <FilterToggle
+          key='toggles'
+          id='toggles'
+          callback={{ toggleCounter, toggleCheckbox }}
+        >
           <Fragment label='Toggles'>
             <ToggleSwitch
               label='Student'

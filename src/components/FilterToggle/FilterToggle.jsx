@@ -42,6 +42,7 @@ export default function FilterToggle(props) {
   return (
     <Box
       id={`filter_${props.id}`}
+      key={`filter_${props.key}`}
       display='flex'
       flexDirection='row'
       className={
