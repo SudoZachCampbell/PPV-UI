@@ -197,7 +197,7 @@ export default function Search(props) {
     }
   };
 
-  const toggleCounter = increment => {
+  const toggleCounter = (id, increment) => {
     let currentCount = toggledCount + increment;
     setToggledCount(currentCount);
     // setCheckedFilters(() => {

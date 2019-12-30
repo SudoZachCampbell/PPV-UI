@@ -19,6 +19,9 @@ const useStyles = makeStyles({
   },
   arrowFlipped: {
     transform: 'scaleX(-1)'
+  },
+  filterBox: {
+    width:'500px'
   }
 });
 
@@ -42,6 +45,7 @@ export default function FilterToggle(props) {
   return (
     <Box
       id={`filter_${props.id}`}
+      width={500}
       display='flex'
       flexDirection='row'
       className={
