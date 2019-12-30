@@ -6,19 +6,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import './FormTextField.scss';
 
 const useStyles = makeStyles({
-  areaBox: {
+  headerBox: {},
 
-  },
-
-  areaText: {
+  headerText: {
     fontSize: '50px',
     fontFamily: 'segoe ui'
   },
 
-  areaLabel: {
+  headerLabel: {
     fontSize: '30px',
     fontFamily: 'segoe ui'
+  },
+  normalBox: {},
 
+  normalText: {
+    fontSize: '20px',
+    fontFamily: 'segoe ui'
+  },
+  normalLabel: {
+    fontSize: '15px',
+    fontFamily: 'segoe ui'
   }
 });
 
@@ -35,14 +42,13 @@ export default function FormTextField(props) {
         onChange={props.callbacks.onChange}
         onFocus={props.callbacks.onFocus}
         onBlur={props.callbacks.onBlur}
-        className='text-field'
         value={props.value}
         margin='normal'
         InputProps={{
-          className: classes.areaText
+          className: classes[`${props.type ? props.type : 'normal'}Text`]
         }}
         InputLabelProps={{
-          className: classes.areaLabel
+          className: classes[`${props.type ? props.type : 'normal'}Label`]
         }}
       />
     </FormControl>

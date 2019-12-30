@@ -5,11 +5,11 @@ import DoubleArrow from '@material-ui/icons/DoubleArrow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Slide from '@material-ui/core/Slide';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import './FilterToggle.scss';
-import { orange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
   arrow: {
@@ -42,7 +42,6 @@ export default function FilterToggle(props) {
   return (
     <Box
       id={`filter_${props.id}`}
-      key={`filter_${props.key}`}
       display='flex'
       flexDirection='row'
       className={
@@ -50,18 +49,20 @@ export default function FilterToggle(props) {
       }
     >
       <Checkbox checked={apply} onChange={applyChanged} />
-      {toggled ? (
-        <>{props.children}</>
-      ) : (
-        <>
-          {/* <Button onClick={toggleChange}>
+      <Slide direction='right' in={toggled} mountOnEnter unmountOnExit>
+        {/*{toggled ? ( */}
+        <div key={`props_${props.key}`}>{props.children}</div>
+        {/* }) : (
+          <>
+             <Button onClick={toggleChange}>
             <DoubleArrow className={classes.arrow} color='primary' />
           </Button>
           <Typography style={{ display: 'inline' }}>
             {props.children.props.label}
-          </Typography> */}
-        </>
-      )}
+          </Typography> 
+           </> 
+         ) */}
+      </Slide>
       <Button onClick={toggleChange}>
         <DoubleArrow
           className={

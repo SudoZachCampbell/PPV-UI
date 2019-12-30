@@ -259,6 +259,7 @@ export default function Search(props) {
             <div>
               <FormTextField
                 label='Area'
+                type='header'
                 value={term}
                 callbacks={{
                   onChange: areaChanged,
