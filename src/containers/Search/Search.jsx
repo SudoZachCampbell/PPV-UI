@@ -219,7 +219,8 @@ export default function Search(props) {
     st: 'rent',
     currency: 'GBP',
     runit: 'm',
-    pt: 'residential'
+    pt: 'residential',
+    term: term
   };
 
   const valueStore = {
@@ -228,7 +229,6 @@ export default function Search(props) {
     max: max,
     minbeds: minbeds,
     maxbeds: maxbeds,
-    term: term,
     radius: radius,
     excludePoa: excludePoa,
     stygrp: stygrp,
@@ -278,6 +278,27 @@ export default function Search(props) {
                 value={radius}
               />
             )}
+            <div>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={searchStarted}
+              >
+                Search
+              </Button>
+            </div>
+            <div>
+              {/* {toggledCount === 0 && (
+                <Suspense fallback={<h1>Loading...</h1>}>
+              <>*/}
+              <QuickStats
+                toggled={toggledCount}
+                areaFocused={areaFocusedBool}
+                query={searchParams}
+              />
+              {/*</>
+              )} */}
+            </div>
           </div>
         </ClickAwayListener>
       </div>
@@ -383,26 +404,9 @@ export default function Search(props) {
             />
           </Fragment>
         </FilterToggle>
-        <div>
-          {toggledCount === 0 && (
-            // <Suspense fallback={<h1>Loading...</h1>}>
-            <>
-              <QuickStats
-                toggled={toggledCount}
-                areaFocused={areaFocusedBool}
-                query={searchParams}
-              />
-            </>
-          )}
-        </div>
       </div>
       <div id='search_bottom'>
         <div>
-          <div>
-            <Button variant='contained' color='primary' onClick={searchStarted}>
-              Search
-            </Button>
-          </div>
           <div>
             <p>{JSON.stringify(searchParams)}</p>
           </div>
