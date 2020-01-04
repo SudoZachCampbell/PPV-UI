@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -21,7 +23,7 @@ const classes = {
 export default function PropertyListItem(props) {
   const [expanded, setExpanded] = React.useState(false);
 
-  console.log(props.id);
+  console.log(props);
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -45,8 +47,16 @@ export default function PropertyListItem(props) {
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <Typography>{props.property.description}</Typography>
+        <Box display='flex' flexDirection='row'>
+          <div style={{ width: '60%', padding: '50px 50px' }}>
+            <Typography>{props.property.description}</Typography>
+            <Button style={{margin: '30px 0'}} variant='contained' color='primary'>Full Details</Button>
+          </div>
+          <div style={{ width: '40%' }}>
+            <img style={{ width: '100%', height: 'auto' }} src={props.property.images[0]} alt='Property Image' />
+          </div>
+        </Box>
       </ExpansionPanelDetails>
-    </ExpansionPanel>
+    </ExpansionPanel >
   );
 }
