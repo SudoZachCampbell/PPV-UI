@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     transform: 'scaleX(-1)'
   },
   filterBox: {
-    width:'500px'
+    width: '500px'
   }
 });
 
@@ -45,7 +45,6 @@ export default function FilterToggle(props) {
   return (
     <Box
       id={`filter_${props.id}`}
-      width={500}
       display='flex'
       flexDirection='row'
       className={
@@ -55,7 +54,7 @@ export default function FilterToggle(props) {
       <Checkbox checked={apply} onChange={applyChanged} />
       <Slide direction='right' in={toggled} mountOnEnter unmountOnExit>
         {/*{toggled ? ( */}
-        <div style={{width:'100%'}} key={`props_${props.key}`}>{props.children}</div>
+        <div key={`props_${props.key}`}>{props.children}</div>
         {/* }) : (
           <>
              <Button onClick={toggleChange}>
@@ -75,6 +74,11 @@ export default function FilterToggle(props) {
           color={toggled ? 'primary' : 'secondary'}
         />
       </Button>
+      {toggled || (
+        <Typography>
+          {props.children.props.label}
+        </Typography>
+      )}
     </Box>
   );
 }
