@@ -55,7 +55,7 @@ export default function FilterToggle(props) {
       <Checkbox checked={apply} onChange={applyChanged} />
       <Slide direction='right' in={toggled} mountOnEnter unmountOnExit>
         {/*{toggled ? ( */}
-        <div key={`props_${props.key}`}>{props.children}</div>
+        <div style={{width:'100%'}} key={`props_${props.key}`}>{props.children}</div>
         {/* }) : (
           <>
              <Button onClick={toggleChange}>
