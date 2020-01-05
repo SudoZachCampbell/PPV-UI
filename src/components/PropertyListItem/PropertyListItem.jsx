@@ -28,6 +28,11 @@ export default function PropertyListItem(props) {
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  const fullDetailsClicked = () => {
+    props.callback(props.property.id);
+  };
+
   return (
     <ExpansionPanel
       expanded={expanded === `panel${props.id}`}
@@ -50,13 +55,23 @@ export default function PropertyListItem(props) {
         <Box display='flex' flexDirection='row'>
           <div style={{ width: '60%', padding: '50px 50px' }}>
             <Typography>{props.property.description}</Typography>
-            <Button style={{margin: '30px 0'}} variant='contained' color='primary'>Full Details</Button>
+            <Button
+              style={{ margin: '30px 0' }}
+              variant='contained'
+              color='primary'
+              onClick={fullDetailsClicked}
+            >
+              Full Details
+            </Button>
           </div>
           <div style={{ width: '40%' }}>
-            <img style={{ width: '100%', height: 'auto' }} src={props.property.images[0]} alt='Property Image' />
+            <img
+              style={{ width: '100%', height: 'auto' }}
+              src={props.property.images[0]}
+            />
           </div>
         </Box>
       </ExpansionPanelDetails>
-    </ExpansionPanel >
+    </ExpansionPanel>
   );
 }
