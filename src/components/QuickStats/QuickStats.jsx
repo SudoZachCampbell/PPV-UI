@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
-import getProperty from '../../api/get-property';
+import getProperty from '../../api/ppv-service';
 
 export default function QuickStats(props) {
   const [count, setCount] = useState('');

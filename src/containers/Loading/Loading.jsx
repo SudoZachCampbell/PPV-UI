@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import propertyAPI from '../../api/get-property';
+import propertyAPI from '../../api/ppv-service';
 
 export default function Loading(props) {
   const [search, setSearch] = useState({});

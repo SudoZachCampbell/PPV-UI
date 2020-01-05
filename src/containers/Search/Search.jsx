@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
 
 import FilterToggle from '../../components/FilterToggle/FilterToggle';
