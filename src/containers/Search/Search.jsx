@@ -1,6 +1,7 @@
 import React, { useState, Fragment, Suspense } from 'react';
 import _ from 'lodash';
 
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Typography from '@material-ui/core/Typography';
@@ -253,55 +254,36 @@ export default function Search(props) {
 
   return (
     <div id='search_container'>
-      <div id='search_top'>
-        <ClickAwayListener onClickAway={() => setAreaFocusedBool(false)}>
-          <div>
-            <div>
-              <FormTextField
-                label='Area'
-                type='header'
-                value={term}
-                callbacks={{
-                  onChange: areaChanged,
-                  onFocus: areaFocused,
-                  onBlur: areaUnfocused
-                }}
-              />
-            </div>
-            {areaFocusedBool && (
-              <GoogleMap
-                range={radius}
-                steps={steps}
-                lat={position[0]}
-                long={position[1]}
-                callback={rangeChanged}
-                value={radius}
-              />
-            )}
-            <div>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={searchStarted}
-              >
-                Search
-              </Button>
-            </div>
-            <div>
-              {/* {toggledCount === 0 && (
-                <Suspense fallback={<h1>Loading...</h1>}>
-              <>*/}
-              <QuickStats
-                toggled={toggledCount}
-                areaFocused={areaFocusedBool}
-                query={searchParams}
-              />
-              {/*</>
-              )} */}
-            </div>
-          </div>
-        </ClickAwayListener>
-      </div>
+      <Box display='flex' flexDirection='row' id='search_top'>
+        <div>
+          <FormTextField
+            label='Area'
+            type='header'
+            value={term}
+            callbacks={{
+              onChange: areaChanged,
+              onFocus: areaFocused,
+              onBlur: areaUnfocused
+            }}
+          />
+          <QuickStats
+            toggled={toggledCount}
+            areaFocused={areaFocusedBool}
+            query={searchParams}
+          />
+          <Button variant='contained' color='primary' onClick={searchStarted}>
+            Search
+          </Button>
+        </div>
+        <GoogleMap
+          range={radius}
+          steps={steps}
+          lat={position[0]}
+          long={position[1]}
+          callback={rangeChanged}
+          value={radius}
+        />
+      </Box>
       <div id='search_filtersbar'>
         <FilterToggle
           key='sta'
