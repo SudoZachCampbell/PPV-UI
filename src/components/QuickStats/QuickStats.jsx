@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import Typography from '@material-ui/core/Typography';
+
 import getProperty from '../../api/get-property';
 
 export default function QuickStats(props) {
@@ -20,11 +22,13 @@ export default function QuickStats(props) {
     }
   }, [props.toggled, props.areaChanged, props.query]);
 
-  return !count ? (
-    <h1>Loading Number of Properties...</h1>
-  ) : count === 'empty' ? (
-    <h1>No Properties Found</h1>
-  ) : (
-    <h1>{count}</h1>
+  return (
+    <Typography variant='h5'>
+      {!count
+        ? 'Loading Number of Properties...'
+        : count === 'empty'
+        ? 'No Properties Found'
+        : count}
+    </Typography>
   );
 }
