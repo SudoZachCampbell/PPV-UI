@@ -27,8 +27,9 @@ const [crimeData, setCrimeData] = useState(0);
   ];
 
   useEffect(() => {
-    const openData = PPV.getCrimeData(props.property);
-    setCrimeData(openData.crimes);
+    PPV.getCrimeData(props.property).then(data => {
+        setCrimeData(data);
+    });
   }, [])
 
   return (

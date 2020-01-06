@@ -81,15 +81,17 @@ export default {
   },
 
   getCrimeData: formBody => {
-    request.post(
-      {
-        url: 'http://localhost:8080/open/crime',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(formBody)
-      },
-      (error, response, body) => {
-        return body;
-      }
-    );
+    return new Promise((resolve, reject) => {
+      request.post(
+        {
+          url: 'http://localhost:8080/open/crime',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(formBody)
+        },
+        (error, response, body) => {
+          resolve(body);
+        }
+      );
+    });
   }
 };
