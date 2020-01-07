@@ -22,9 +22,7 @@ const classes = {
 
 export default function PropertyListItem(props) {
   const [expanded, setExpanded] = React.useState(false);
-
-  console.log(props);
-
+  
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };

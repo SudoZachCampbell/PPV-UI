@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropertyList from '../../components/PropertyList/PropertyList';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
+
 import _ from 'lodash';
 
 import './Summary.scss';
@@ -10,6 +11,7 @@ export default function Summary(props) {
   const [focusedProperty, setFocusedProperty] = useState('');
 
   const changePage = (page, propertyId) => {
+    console.log(`Page: ${page}`);
     setFocusedProperty(propertyId);
     setSubPage(page);
   };
@@ -29,6 +31,7 @@ export default function Summary(props) {
       view = (
         <PropertyDetails
           property={props.searchResult.searchResult[focusedProperty]}
+          callback={changePage}
         />
       );
       break;

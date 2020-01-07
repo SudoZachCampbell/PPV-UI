@@ -14,7 +14,6 @@ export default function Loading(props) {
           props.searchParams
         );
         property = JSON.parse(property);
-        console.log(property)
         props.finishLoading(property);
       } else {
         console.log(`Starting Process\nArea: ${props.area}`);
@@ -23,7 +22,6 @@ export default function Loading(props) {
           props.area,
           props.searchParams
         );
-        console.log(propertyUrlsList);
         propertyUrlsList = JSON.parse(propertyUrlsList);
         const searchId = propertyUrlsList.searchId;
         let propertyObject = {

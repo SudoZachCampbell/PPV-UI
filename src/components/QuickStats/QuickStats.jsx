@@ -10,7 +10,6 @@ export default function QuickStats(props) {
   useEffect(() => {
     if (props.toggled === 0 && !props.areaFocused) {
       setCount('');
-      console.log(`Toggled: ${props.toggled}, Area: ${props.areaFocused}`);
       getProperty.getPropertyCount(props.query).then(data => {
         let dataObject = JSON.parse(data);
         if (Object.entries(dataObject.propertyCount).length !== 0) {

@@ -25,7 +25,6 @@ function App(props) {
   };
 
   const finishLoading = returnedSearchResult => {
-    console.log(returnedSearchResult);
     setSearchResult(returnedSearchResult);
     setViewState(2);
   };
@@ -36,7 +35,6 @@ function App(props) {
       view = <Search executeSearch={executeSearch} />;
       break;
     case 1:
-      console.log(searchParams);
       view = (
         <Loading
           area={area}
@@ -47,7 +45,6 @@ function App(props) {
       );
       break;
     case 2:
-      console.log(searchResult);
       view = <Summary searchResult={searchResult} />;
       break;
     default:
