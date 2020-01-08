@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Slider from '@material-ui/core/Slider';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,6 +28,57 @@ export default function PropertyDetails(props) {
     'postcode',
     'images',
     'lastUpdated'
+  ];
+
+  const marks = [
+    {
+      value: 0,
+      label: '0m'
+    },
+    {
+      value: 0.1
+    },
+    {
+      value: 0.25,
+      label: '250m'
+    },
+    {
+      value: 0.3
+    },
+    {
+      value: 0.4
+    },
+    {
+      value: 0.5,
+      label: '500m'
+    },
+    {
+      value: 0.75
+    },
+    {
+      value: 1,
+      label: '1km'
+    },
+    {
+      value: 1.5,
+      label: '1.5km'
+    },
+    {
+      value: 2,
+      label: '2km'
+    },
+    {
+      value: 3,
+      label: '3km'
+    },
+    {
+      value: 4,
+      label: '4km'
+    },
+    {
+      value: 5,
+      label: '5km'
+    }
   ];
 
   useEffect(() => {
@@ -54,9 +106,19 @@ export default function PropertyDetails(props) {
     });
   }, []);
 
+  const setDataDistance = value => {};
+
   const goBack = () => {
     props.callback(0, 0);
   };
+
+  const valuetext = value => {
+    if (value >= 1) {
+      return `${value}km`;
+    } else {
+      return `${value}m`;
+    }
+  }
 
   return (
     <div>
@@ -85,6 +147,20 @@ export default function PropertyDetails(props) {
       ) : (
         <div>
           <BarGraph data={crimeCategoryData} />
+          <Slider
+            id='map_slider'
+            onChange={(event, value) => {
+              setDataDistance(value);
+            }}
+            defaultValue={1}
+            min={0}
+            max={5}
+            step={null}
+            marks={marks}
+            // aria-labelledby='vertical-slider'
+            valueLabelDisplay='auto'
+            getAriaValueText={valuetext}
+          />
           <Typography>{JSON.stringify(crimeData)}}</Typography>
           <Typography>{JSON.stringify(crimeCategoryData)}}</Typography>
         </div>
