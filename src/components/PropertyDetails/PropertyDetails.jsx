@@ -15,6 +15,8 @@ import BarGraph from '../BarGraph/BarGraph';
 import PPV from '../../api/ppv-service';
 
 export default function PropertyDetails(props) {
+  const [crimeDistance, setCrimeDistance] = useState(1);
+  const [filteredCrimeData, setFilteredCrimeData] = useState([]);
   const [crimeData, setCrimeData] = useState([]);
   const [crimeCategoryData, setCrimeCategoryData] = useState({});
 
@@ -62,37 +64,25 @@ export default function PropertyDetails(props) {
     {
       value: 1.5,
       label: '1.5km'
-    },
-    {
-      value: 2,
-      label: '2km'
-    },
-    {
-      value: 3,
-      label: '3km'
-    },
-    {
-      value: 4,
-      label: '4km'
-    },
-    {
-      value: 5,
-      label: '5km'
     }
   ];
 
   useEffect(() => {
     PPV.getCrimeData(props.property).then(data => {
       setCrimeData(() => {
-        if (data.fullData.length !== 0) {
-          return data.fullData;
+        if (data.length !== 0) {
+          return data;
         } else {
           return false;
         }
       });
+      setFilteredCrimeData(() => {
+        return data.filter(value => value.distance <= crimeDistance);
+      });
+      const categoryCounts = countCategories(filteredCrimeData);
       setCrimeCategoryData(() => {
         return _.reduce(
-          data.categoryCounts,
+          categoryCounts,
           (accum, value, key) => {
             accum.push({
               name: key,
@@ -106,7 +96,44 @@ export default function PropertyDetails(props) {
     });
   }, []);
 
-  const setDataDistance = value => {};
+  useEffect(() => {
+    setFilteredCrimeData(() => {
+      return crimeData.filter(value => value.distance <= crimeDistance);
+    });
+    const categoryCounts = countCategories(filteredCrimeData);
+    setCrimeCategoryData(() => {
+      return _.reduce(
+        categoryCounts,
+        (accum, value, key) => {
+          accum.push({
+            name: key,
+            occurences: value
+          });
+          return accum;
+        },
+        []
+      );
+    });
+  }, [crimeDistance]);
+
+  const countCategories = crimeData => {
+    return _.reduce(
+      crimeData,
+      (accum, value, key) => {
+        if (value.category in accum) {
+          accum[value.category] += 1;
+        } else {
+          accum[value.category] = 1;
+        }
+        return accum;
+      },
+      {}
+    );
+  };
+
+  const setDataDistance = value => {
+    setCrimeDistance(value);
+  };
 
   const goBack = () => {
     props.callback(0, 0);
@@ -118,7 +145,7 @@ export default function PropertyDetails(props) {
     } else {
       return `${value}m`;
     }
-  }
+  };
 
   return (
     <div>
@@ -154,12 +181,12 @@ export default function PropertyDetails(props) {
             }}
             defaultValue={1}
             min={0}
-            max={5}
+            max={1.5}
             step={null}
             marks={marks}
             // aria-labelledby='vertical-slider'
             valueLabelDisplay='auto'
-            getAriaValueText={valuetext}
+            valueLabelFormat={valuetext}
           />
           <Typography>{JSON.stringify(crimeData)}}</Typography>
           <Typography>{JSON.stringify(crimeCategoryData)}}</Typography>
