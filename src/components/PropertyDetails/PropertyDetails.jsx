@@ -10,10 +10,12 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Typography } from '@material-ui/core';
 
+import BarGraph from '../BarGraph/BarGraph';
 import PPV from '../../api/ppv-service';
 
 export default function PropertyDetails(props) {
-  const [crimeData, setCrimeData] = useState(0);
+  const [crimeData, setCrimeData] = useState({});
+  const [crimeCategoryData, setCrimeCategoryData] = useState({});
 
   const omits = [
     'id',
@@ -29,12 +31,27 @@ export default function PropertyDetails(props) {
 
   useEffect(() => {
     PPV.getCrimeData(props.property).then(data => {
-      setCrimeData(data);
+      setCrimeData(() => {
+        return data.fullData
+      });
+      setCrimeCategoryData(() => {
+        return _.reduce(
+          data.categoryCounts,
+          (accum, value, key) => {
+            accum.push({
+              name: key,
+              occurences: value
+            });
+            return accum;
+          },
+          []
+        );
+      });
     });
   }, []);
 
   const goBack = () => {
-    props.callback(0,0)
+    props.callback(0, 0);
   };
 
   return (
@@ -57,9 +74,15 @@ export default function PropertyDetails(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography>
-        {!crimeData ? 'Loading Area Crime Data...' : crimeData}
-      </Typography>
+      {!Object.keys(crimeData).length ? (
+        'Loading Area Crime Data...'
+      ) : (
+        <div>
+          <BarGraph data={crimeCategoryData} />
+          <Typography>{JSON.stringify(crimeData)}}</Typography>
+          <Typography>{JSON.stringify(crimeCategoryData)}}</Typography>
+        </div>
+      )}
     </div>
   );
 }

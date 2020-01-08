@@ -89,7 +89,7 @@ export default {
           body: JSON.stringify(formBody)
         },
         (error, response, body) => {
-          resolve(body);
+          resolve(JSON.parse(body));
         }
       );
     });

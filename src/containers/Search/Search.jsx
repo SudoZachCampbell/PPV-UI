@@ -195,6 +195,7 @@ export default function Search(props) {
         }
       });
     }
+    setAreaFocusedBool(false);
   };
 
   const toggleCounter = (id, increment) => {
