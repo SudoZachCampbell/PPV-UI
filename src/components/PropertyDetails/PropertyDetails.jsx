@@ -14,7 +14,7 @@ import BarGraph from '../BarGraph/BarGraph';
 import PPV from '../../api/ppv-service';
 
 export default function PropertyDetails(props) {
-  const [crimeData, setCrimeData] = useState({});
+  const [crimeData, setCrimeData] = useState([]);
   const [crimeCategoryData, setCrimeCategoryData] = useState({});
 
   const omits = [
@@ -32,7 +32,11 @@ export default function PropertyDetails(props) {
   useEffect(() => {
     PPV.getCrimeData(props.property).then(data => {
       setCrimeData(() => {
-        return data.fullData
+        if (data.fullData.length !== 0) {
+          return data.fullData;
+        } else {
+          return false;
+        }
       });
       setCrimeCategoryData(() => {
         return _.reduce(
@@ -74,8 +78,10 @@ export default function PropertyDetails(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      {!Object.keys(crimeData).length ? (
-        'Loading Area Crime Data...'
+      {!crimeData ? (
+        <Typography>No Crimes in that Area</Typography>
+      ) : crimeData.length === 0 ? (
+        <Typography>Loading Area Crime Data...</Typography>
       ) : (
         <div>
           <BarGraph data={crimeCategoryData} />
