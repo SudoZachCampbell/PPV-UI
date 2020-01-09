@@ -34,11 +34,8 @@ export default function PropertyDetails(props) {
 
   const marks = [
     {
-      value: 0,
-      label: '0m'
-    },
-    {
-      value: 0.1
+      value: 0.1,
+      label: '100m'
     },
     {
       value: 0.25,
@@ -76,30 +73,18 @@ export default function PropertyDetails(props) {
           return false;
         }
       });
-      setFilteredCrimeData(() => {
-        return data.filter(value => value.distance <= crimeDistance);
-      });
-      const categoryCounts = countCategories(filteredCrimeData);
-      setCrimeCategoryData(() => {
-        return _.reduce(
-          categoryCounts,
-          (accum, value, key) => {
-            accum.push({
-              name: key,
-              occurences: value
-            });
-            return accum;
-          },
-          []
-        );
-      });
+
+     
     });
-  }, []);
+  }, [props.property]);
 
   useEffect(() => {
     setFilteredCrimeData(() => {
       return crimeData.filter(value => value.distance <= crimeDistance);
     });
+  }, [crimeData, crimeDistance])
+
+  useEffect(() => {
     const categoryCounts = countCategories(filteredCrimeData);
     setCrimeCategoryData(() => {
       return _.reduce(
@@ -114,7 +99,7 @@ export default function PropertyDetails(props) {
         []
       );
     });
-  }, [crimeDistance]);
+  }, [filteredCrimeData])
 
   const countCategories = crimeData => {
     return _.reduce(
@@ -152,7 +137,7 @@ export default function PropertyDetails(props) {
       <Button color='secondary' onClick={goBack}>
         Back
       </Button>
-      <Typography variant='h1'>{`${props.property.address}, ${props.property.postcode}`}</Typography>
+      <Typography variant='h3'>{`${props.property.address}, ${props.property.postcode}`}</Typography>
       <TableContainer component={Paper}>
         <Table aria-label='simple table'>
           <TableBody>
@@ -180,7 +165,7 @@ export default function PropertyDetails(props) {
               setDataDistance(value);
             }}
             defaultValue={1}
-            min={0}
+            min={0.1}
             max={1.5}
             step={null}
             marks={marks}
