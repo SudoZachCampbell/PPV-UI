@@ -19,7 +19,7 @@ export default function QuickStats(props) {
         }
       });
     }
-  }, [props.toggled, props.areaFocused, props.term]);
+  }, [props.toggled, props.term, props.query]);
 
   return (
     <Typography variant='h5'>

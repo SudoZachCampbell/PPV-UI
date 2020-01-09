@@ -1,4 +1,4 @@
-import React, { useState, Fragment, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 
 import Box from '@material-ui/core/Box';
@@ -58,6 +58,15 @@ export default function Search(props) {
   const [toggledCount, setToggledCount] = useState(0);
 
   const [checkedFilters, setCheckedFilters] = useState(filters);
+
+  const [searchParams, setSearchParams] = useState({
+    st: 'rent',
+    currency: 'GBP',
+    radius,
+    runit: 'm',
+    pt: 'residential',
+    term
+  });
 
   const steps = [
     {
@@ -190,26 +199,62 @@ export default function Search(props) {
 
   const areaUnfocused = e => {
     if (e.target.value) {
-      geocoder.getLLByArea(e.target.value).then(data => {
-        if (!_.isEmpty(data.results)) {
-          const location = data.results[0].geometry.location;
-          setPosition([location.lat, location.lng]);
+      console.log(`Value: ${e.target.value}`);
+      ppvService.getAreaTerm(area).then(newTerm => {
+        console.log(`Term: ${newTerm}`);
+        const areaId = parseInt(newTerm.params.term[0]);
+        console.log(`ID: ${areaId}`);
+        if (areaId && !Number.isNaN(areaId)) {
+          setTerm(areaId);
+        } else {
+          setTerm(-1);
         }
       });
     }
     setAreaFocusedBool(false);
   };
 
-  const onEnterKey = e => {
-    ppvService.getAreaTerm(area).then(data => {
-      const areaId = parseInt(data.params.term[0]);
-      if (areaId && !Number.isNaN(areaId)) {
-        setTerm(areaId);
-      } else {
-        setTerm(-1);
-      }
+  useEffect(() => {
+    if (term !== -1) {
+      geocoder.getLLByArea(area).then(data => {
+        if (!_.isEmpty(data.results)) {
+          const location = data.results[0].geometry.location;
+          setPosition([location.lat, location.lng]);
+        }
+      });
+    }
+  }, [term]);
+
+  useEffect(() => {
+    const searchQuery = {
+      st: 'rent',
+      currency: 'GBP',
+      radius,
+      runit: 'm',
+      pt: 'residential',
+      term
+    }
+
+    const valueStore = {
+      sta,
+      min,
+      max,
+      minbeds,
+      maxbeds,
+      excludePoa,
+      stygrp,
+      ft,
+      keywords
+    };
+
+    _.forEach(checkedFilters, (value, key) => {
+      if (value) searchQuery[key] = valueStore[key];
     });
-  };
+
+    setSearchParams(() => {
+      return searchQuery;
+    });
+  }, [term, radius, sta, min, max, minbeds, maxbeds, excludePoa, stygrp, ft, keywords, checkedFilters]);
 
   const toggleCounter = (id, increment) => {
     let currentCount = toggledCount + increment;
@@ -229,31 +274,6 @@ export default function Search(props) {
       return newFilters;
     });
   };
-
-  const searchParams = {
-    st: 'rent',
-    currency: 'GBP',
-    radius,
-    runit: 'm',
-    pt: 'residential',
-    term
-  };
-
-  const valueStore = {
-    sta,
-    min,
-    max,
-    minbeds,
-    maxbeds,
-    excludePoa,
-    stygrp,
-    ft,
-    keywords
-  };
-
-  _.forEach(checkedFilters, (value, key) => {
-    if (value) searchParams[key] = valueStore[key];
-  });
 
   const tracking = {
     areaFocusedBool,
@@ -277,16 +297,10 @@ export default function Search(props) {
             callbacks={{
               onChange: areaChanged,
               onFocus: areaFocused,
-              onBlur: areaUnfocused,
-              onEnterKey: onEnterKey
+              onBlur: areaUnfocused
             }}
           />
-          <QuickStats
-            toggled={toggledCount}
-            areaFocused={areaFocusedBool}
-            query={searchParams}
-            term={term}
-          />
+          <QuickStats toggled={toggledCount} query={searchParams} term={term} />
           <Button
             variant='contained'
             color='primary'
@@ -325,7 +339,7 @@ export default function Search(props) {
           callback={{ toggleCounter, toggleCheckbox }}
           divClass='price-container'
         >
-          <Fragment >
+          <>
             <Typography label='Price' id='discrete-slider'>
               Price
             </Typography>
@@ -341,23 +355,20 @@ export default function Search(props) {
                 callback={maxPriceChanged}
               />
             </div>
-          </Fragment>
+          </>
         </FilterToggle>
         <FilterToggle
           key='house_style'
-            label='House Style'
-            id='house_style'
+          label='House Style'
+          id='house_style'
           callback={{ toggleCounter, toggleCheckbox }}
         >
-          <HouseStyleSelect
-            preselected={stygrp}
-            callback={styleChanged}
-          />
+          <HouseStyleSelect preselected={stygrp} callback={styleChanged} />
         </FilterToggle>
         <FilterToggle
           key='bedrooms'
-            label='Bedrooms'
-            id='bedrooms'
+          label='Bedrooms'
+          id='bedrooms'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <HorizontalSlider

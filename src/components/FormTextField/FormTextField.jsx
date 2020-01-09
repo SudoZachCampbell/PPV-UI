@@ -35,7 +35,7 @@ export default function FormTextField(props) {
 
   const keyPressed = event => {
     if (event.key === 'Enter') {
-      props.callbacks.onEnterKey();
+      event.target.blur();
     }
   };
 
