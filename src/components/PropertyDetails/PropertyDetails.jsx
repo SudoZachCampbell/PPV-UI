@@ -121,7 +121,7 @@ export default function PropertyDetails(props) {
   };
 
   const goBack = () => {
-    props.callback(0, 0);
+    props.callback(0, -1);
   };
 
   const valuetext = value => {

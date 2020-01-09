@@ -28,7 +28,7 @@ export default function PropertyListItem(props) {
   };
 
   const fullDetailsClicked = () => {
-    props.callback(props.property.id);
+    props.callback(1, props.property.id);
   };
 
   return (
