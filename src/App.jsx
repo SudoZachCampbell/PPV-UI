@@ -19,9 +19,9 @@ function App(props) {
   const [searchResult, setSearchResult] = useState({});
 
   const executeSearch = (area, searchParams) => {
-    setArea(area);
-    setSearchParams(searchParams);
-    setViewState(1);
+      setArea(area);
+      setSearchParams(searchParams);
+      setViewState(1);
   };
 
   const finishLoading = returnedSearchResult => {

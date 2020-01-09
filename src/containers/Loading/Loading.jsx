@@ -10,7 +10,6 @@ export default function Loading(props) {
         console.log(`Starting Process\nArea: ${props.area}`);
         console.log(JSON.stringify(props.searchParams));
         let property = await propertyAPI.getPropertyUrlsPerformance(
-          props.area,
           props.searchParams
         );
         property = JSON.parse(property);

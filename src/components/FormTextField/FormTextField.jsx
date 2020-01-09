@@ -33,6 +33,12 @@ export default function FormTextField(props) {
   const id = `search_${props.label.toLowerCase().replace(/\s/g, '')}`;
   const classes = useStyles();
 
+  const keyPressed = event => {
+    if (event.key === 'Enter') {
+      props.callbacks.onEnterKey();
+    }
+  };
+
   return (
     <FormControl>
       <TextField
@@ -42,6 +48,7 @@ export default function FormTextField(props) {
         onChange={props.callbacks.onChange}
         onFocus={props.callbacks.onFocus}
         onBlur={props.callbacks.onBlur}
+        onKeyUp={keyPressed}
         value={props.value}
         margin='normal'
         InputProps={{

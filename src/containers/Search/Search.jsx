@@ -17,6 +17,7 @@ import QuickStats from '../../components/QuickStats/QuickStats';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 
 import geocoder from '../../api/geocoder';
+import ppvService from '../../api/ppv-service';
 
 import './Search.scss';
 
@@ -34,7 +35,8 @@ const filters = {
 };
 
 export default function Search(props) {
-  const [term, setArea] = useState('Banbridge');
+  const [area, setArea] = useState('Banbridge');
+  const [term, setTerm] = useState(28);
   const [sta, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
   const [stygrp, setHouseStyle] = useState(['2']);
   const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
@@ -198,6 +200,17 @@ export default function Search(props) {
     setAreaFocusedBool(false);
   };
 
+  const onEnterKey = e => {
+    ppvService.getAreaTerm(area).then(data => {
+      const areaId = parseInt(data.params.term[0]);
+      if (areaId && !Number.isNaN(areaId)) {
+        setTerm(areaId);
+      } else {
+        setTerm(-1);
+      }
+    });
+  };
+
   const toggleCounter = (id, increment) => {
     let currentCount = toggledCount + increment;
     setToggledCount(currentCount);
@@ -216,25 +229,26 @@ export default function Search(props) {
       return newFilters;
     });
   };
+
   const searchParams = {
     st: 'rent',
     currency: 'GBP',
+    radius,
     runit: 'm',
     pt: 'residential',
-    term: term
+    term
   };
 
   const valueStore = {
-    sta: sta,
-    min: min,
-    max: max,
-    minbeds: minbeds,
-    maxbeds: maxbeds,
-    radius: radius,
-    excludePoa: excludePoa,
-    stygrp: stygrp,
-    ft: ft,
-    keywords: keywords
+    sta,
+    min,
+    max,
+    minbeds,
+    maxbeds,
+    excludePoa,
+    stygrp,
+    ft,
+    keywords
   };
 
   _.forEach(checkedFilters, (value, key) => {
@@ -259,19 +273,26 @@ export default function Search(props) {
           <FormTextField
             label='Area'
             type='header'
-            value={term}
+            value={area}
             callbacks={{
               onChange: areaChanged,
               onFocus: areaFocused,
-              onBlur: areaUnfocused
+              onBlur: areaUnfocused,
+              onEnterKey: onEnterKey
             }}
           />
           <QuickStats
             toggled={toggledCount}
             areaFocused={areaFocusedBool}
             query={searchParams}
+            term={term}
           />
-          <Button variant='contained' color='primary' onClick={searchStarted}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={searchStarted}
+            disabled={term === -1}
+          >
             Search
           </Button>
         </div>
@@ -288,10 +309,10 @@ export default function Search(props) {
         <FilterToggle
           key='sta'
           id='sta'
+          label='Rent Type'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <MultiDropDown
-            label='Rent Type'
             values={rentTypeOptions}
             link={sta}
             callback={rentTypeChanged}
@@ -300,10 +321,11 @@ export default function Search(props) {
         <FilterToggle
           key='min_max'
           id='min_max'
+          label='Price'
           callback={{ toggleCounter, toggleCheckbox }}
           divClass='price-container'
         >
-          <Fragment label='Price'>
+          <Fragment >
             <Typography label='Price' id='discrete-slider'>
               Price
             </Typography>
@@ -323,22 +345,22 @@ export default function Search(props) {
         </FilterToggle>
         <FilterToggle
           key='house_style'
-          id='house_style'
+            label='House Style'
+            id='house_style'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <HouseStyleSelect
-            label='House Style'
             preselected={stygrp}
             callback={styleChanged}
           />
         </FilterToggle>
         <FilterToggle
           key='bedrooms'
-          id='bedrooms'
+            label='Bedrooms'
+            id='bedrooms'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <HorizontalSlider
-            label='Bedrooms'
             value={[minbeds, maxbeds]}
             form={[1, 6, 1]}
             callback={bedsChanged}
@@ -346,11 +368,11 @@ export default function Search(props) {
         </FilterToggle>
         <FilterToggle
           key='furnished'
-          id='furnishec'
+          id='furnished'
+          label='Furnished'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <MultiDropDown
-            label='Furnished'
             values={furnishedOptions}
             link={ft}
             callback={furnishedChanged}
@@ -359,11 +381,11 @@ export default function Search(props) {
         <FilterToggle
           key='keywords'
           id='keywords'
+          label='Keywords'
           callback={{ toggleCounter, toggleCheckbox }}
         >
           <ListAdder
             id='app_keywordinput'
-            label='Keywords'
             callback={keywordListUpdate}
             value={keywords}
           />
@@ -371,9 +393,10 @@ export default function Search(props) {
         <FilterToggle
           key='toggles'
           id='toggles'
+          label='Options'
           callback={{ toggleCounter, toggleCheckbox }}
         >
-          <Fragment label='Toggles'>
+          <>
             <ToggleSwitch
               label='Student'
               value={student}
@@ -384,7 +407,7 @@ export default function Search(props) {
               value={excludePoa}
               callback={expoaChanged}
             />
-          </Fragment>
+          </>
         </FilterToggle>
       </div>
       <div id='search_bottom'>

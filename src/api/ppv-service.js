@@ -21,9 +21,8 @@ export default {
     });
   },
 
-  getPropertyUrlsPerformance: (area, formBody) => {
+  getPropertyUrlsPerformance: formBody => {
     return new Promise((resolve, reject) => {
-      console.log(`Getting Urls for ${area}`);
       request.post(
         {
           url: `http://localhost:8080/property/filtered/true`,
@@ -75,6 +74,20 @@ export default {
           } else {
             resolve(body);
           }
+        }
+      );
+    });
+  },
+
+  
+  getAreaTerm: area => {
+    return new Promise((resolve, reject) => {
+      request.get(
+        {
+          url: `http://localhost:8080/property/term/${area}`
+        },
+        (error, response, body) => {
+          resolve(JSON.parse(body));
         }
       );
     });

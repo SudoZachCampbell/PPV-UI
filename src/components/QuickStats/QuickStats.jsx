@@ -8,7 +8,7 @@ export default function QuickStats(props) {
   const [count, setCount] = useState('');
 
   useEffect(() => {
-    if (props.toggled === 0 && !props.areaFocused) {
+    if (props.toggled === 0) {
       setCount('');
       getProperty.getPropertyCount(props.query).then(data => {
         let dataObject = JSON.parse(data);
@@ -19,7 +19,7 @@ export default function QuickStats(props) {
         }
       });
     }
-  }, [props.toggled, props.areaFocused, props.query]);
+  }, [props.toggled, props.areaFocused, props.term]);
 
   return (
     <Typography variant='h5'>

@@ -76,7 +76,7 @@ export default function FilterToggle(props) {
       </Button>
       {toggled || (
         <Typography>
-          {props.children.props.label}
+          {props.label}
         </Typography>
       )}
     </Box>
