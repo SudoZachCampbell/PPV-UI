@@ -4,9 +4,10 @@ import Loading from './containers/Loading/Loading';
 import Summary from './containers/Summary/Summary';
 
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box'
+import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -19,9 +20,9 @@ function App(props) {
   const [searchResult, setSearchResult] = useState({});
 
   const executeSearch = (area, searchParams) => {
-      setArea(area);
-      setSearchParams(searchParams);
-      setViewState(1);
+    setArea(area);
+    setSearchParams(searchParams);
+    setViewState(1);
   };
 
   const finishLoading = returnedSearchResult => {
@@ -53,7 +54,7 @@ function App(props) {
 
   return (
     <div className='App'>
-      <AppBar position='static'>
+      <AppBar position='static' color='fix-theme'>
         <Toolbar>
           <IconButton edge='start' color='inherit' aria-label='menu'>
             <MenuIcon />
@@ -61,7 +62,9 @@ function App(props) {
           <Typography variant='h6'>Property Visualiser</Typography>
         </Toolbar>
       </AppBar>
-      {view}
+      <Box padding='35px'>
+        {view}
+      </Box>
     </div>
   );
 }

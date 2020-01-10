@@ -57,8 +57,8 @@ export default function Summary(props) {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Summary" {...a11yProps(0)} />
+        <Tab label="Property List" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <SearchStats result={props.searchResult} />
