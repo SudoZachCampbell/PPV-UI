@@ -86,20 +86,7 @@ export default function PropertyDetails(props) {
   }, [crimeData, crimeDistance])
 
   useEffect(() => {
-    const categoryCounts = countCategories(filteredCrimeData);
-    setCrimeCategoryData(() => {
-      return _.reduce(
-        categoryCounts,
-        (accum, value, key) => {
-          accum.push({
-            name: key,
-            occurences: value
-          });
-          return accum;
-        },
-        []
-      );
-    });
+    setCrimeCategoryData(countCategories(filteredCrimeData));
   }, [filteredCrimeData])
 
   const countCategories = crimeData => {
@@ -159,7 +146,7 @@ export default function PropertyDetails(props) {
         <Typography>Loading Area Crime Data...</Typography>
       ) : (
             <Box width='100%'>
-              <BarGraph data={crimeCategoryData} />
+              <BarGraph data={crimeCategoryData} x='name' y='occurences' />
               <Slider
                 id='map_slider'
                 onChange={(event, value) => {

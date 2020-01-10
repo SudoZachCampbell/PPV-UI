@@ -17,7 +17,7 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-      value === index && <Box p={3} width='100%'>{children}</Box>
+    value === index && <Box p={3} width='100%'>{children}</Box>
   );
 }
 
@@ -61,7 +61,7 @@ export default function Summary(props) {
         <Tab label="Item Two" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        {/* <SearchStats /> */}
+        <SearchStats result={props.searchResult} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <PropertyList result={props.searchResult.searchResult} />
