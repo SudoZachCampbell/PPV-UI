@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import RingLoader from 'react-spinners/RingLoader'
+
+import Box from '@material-ui/core/Box'
+
 import propertyAPI from '../../api/ppv-service';
+import { Typography } from '@material-ui/core';
 
 export default function Loading(props) {
   const [search, setSearch] = useState({});
@@ -53,8 +58,11 @@ export default function Loading(props) {
   }, []);
 
   return (
-    <div>
-      <p>{JSON.stringify(search)}</p>
-    </div>
+    <Box display='flex' flexDirection='column' height='100%' alignItems='center' justifyContent='center'>
+      <RingLoader size={100} color={'#9013FE'}></RingLoader>
+      <Box>
+        <Typography variant='h4' align='center' color='#9013FE'>Loading...</Typography>
+      </Box>
+    </Box>
   );
 }

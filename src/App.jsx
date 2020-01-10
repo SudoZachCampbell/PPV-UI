@@ -53,7 +53,7 @@ function App(props) {
 
   return (
     <div className='App'>
-      <AppBar color='primary' position='static'>
+      <AppBar position='static'>
         <Toolbar>
           <IconButton edge='start' color='inherit' aria-label='menu'>
             <MenuIcon />
