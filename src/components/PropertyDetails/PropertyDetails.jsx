@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import _ from 'lodash';
 
+import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
@@ -74,7 +75,7 @@ export default function PropertyDetails(props) {
         }
       });
 
-     
+
     });
   }, [props.property]);
 
@@ -133,7 +134,7 @@ export default function PropertyDetails(props) {
   };
 
   return (
-    <div>
+    <Box width='100%'>
       <Button color='secondary' onClick={goBack}>
         Back
       </Button>
@@ -157,26 +158,24 @@ export default function PropertyDetails(props) {
       ) : crimeData.length === 0 ? (
         <Typography>Loading Area Crime Data...</Typography>
       ) : (
-        <div>
-          <BarGraph data={crimeCategoryData} />
-          <Slider
-            id='map_slider'
-            onChange={(event, value) => {
-              setDataDistance(value);
-            }}
-            defaultValue={1}
-            min={0.1}
-            max={1.5}
-            step={null}
-            marks={marks}
-            // aria-labelledby='vertical-slider'
-            valueLabelDisplay='auto'
-            valueLabelFormat={valuetext}
-          />
-          <Typography>{JSON.stringify(crimeData)}}</Typography>
-          <Typography>{JSON.stringify(crimeCategoryData)}}</Typography>
-        </div>
-      )}
-    </div>
+            <Box width='100%'>
+              <BarGraph data={crimeCategoryData} />
+              <Slider
+                id='map_slider'
+                onChange={(event, value) => {
+                  setDataDistance(value);
+                }}
+                defaultValue={1}
+                min={0.1}
+                max={1.5}
+                step={null}
+                marks={marks}
+                // aria-labelledby='vertical-slider'
+                valueLabelDisplay='auto'
+                valueLabelFormat={valuetext}
+              />
+            </Box>
+          )}
+    </Box>
   );
 }

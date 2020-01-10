@@ -4,6 +4,8 @@ import _ from 'lodash';
 import PropertyListItem from '../../components/PropertyListItem/PropertyListItem';
 import PropertyDetails from '../../components/PropertyDetails/PropertyDetails';
 
+import Box from '@material-ui/core/Box'
+
 import './PropertyList.scss';
 
 export default function PropertyList(props) {
@@ -44,5 +46,5 @@ export default function PropertyList(props) {
       break;
   }
 
-  return <div className='list'>{view}</div>;
+  return <Box width='100%'>{view}</Box>;
 }
