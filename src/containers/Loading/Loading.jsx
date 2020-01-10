@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import RingLoader from 'react-spinners/RingLoader'
+import { css } from "@emotion/core"
 
 import Box from '@material-ui/core/Box'
 
@@ -59,9 +60,9 @@ export default function Loading(props) {
 
   return (
     <Box display='flex' flexDirection='column' height='100%' alignItems='center' justifyContent='center'>
-      <RingLoader size={100} color={'#9013FE'}></RingLoader>
+      <RingLoader css={css`margin: 30px auto;`} size={100} color={'#9013FE'}></RingLoader>
       <Box>
-        <Typography variant='h4' align='center' color='#9013FE'>Loading...</Typography>
+        <Typography variant='h4' color='#9013FE'>Loading</Typography>
       </Box>
     </Box>
   );
