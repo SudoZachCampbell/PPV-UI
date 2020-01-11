@@ -90,18 +90,7 @@ export default function PropertyDetails(props) {
   }, [filteredCrimeData])
 
   const countCategories = crimeData => {
-    return _.reduce(
-      crimeData,
-      (accum, value, key) => {
-        if (value.category in accum) {
-          accum[value.category] += 1;
-        } else {
-          accum[value.category] = 1;
-        }
-        return accum;
-      },
-      {}
-    );
+    return _.countBy(crimeData, (value) => value.category);
   };
 
   const setDataDistance = value => {
