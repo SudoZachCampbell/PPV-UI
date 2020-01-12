@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -12,21 +12,27 @@ import {
 } from 'recharts';
 
 export default function BarGraph(props) {
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
 
   useEffect(() => {
     setData(() => {
-      const bananas = _.reduce(
-        props.data,
-        (accum, value, key) => {
-          accum.push({
-            [props.x]: key,
-            [props.y]: value
-          });
-          return accum;
-        },
-        []
-      );
+      const bananas = _.sortBy(
+        _.reduce(
+          props.data,
+          (accum, value, key) => {
+            accum.push({
+              [props.x]: key,
+              [props.y]: value
+            });
+            return accum;
+          },
+          []
+        ),
+        [props.x]
+      ).map(value => {
+        value[props.x] = `£${value[props.x]}`;
+        return value
+      });
       console.log(bananas);
       return bananas;
     });
@@ -35,7 +41,7 @@ export default function BarGraph(props) {
   return (
     <div style={{ width: '100%', height: 300 }}>
       <ResponsiveContainer>
-        <BarChart
+        <AreaChart
           data={data}
           margin={{
             top: 5,
@@ -48,9 +54,13 @@ export default function BarGraph(props) {
           <XAxis dataKey={props.x} />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Bar dataKey={props.y} fill='#8884d8' />
-        </BarChart>
+          <Area
+            type='monotone'
+            dataKey={props.y}
+            stroke='#8884d8'
+            fill='#8884d8'
+          />
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

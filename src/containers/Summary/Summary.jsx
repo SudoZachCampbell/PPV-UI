@@ -47,6 +47,8 @@ export default function Summary(props) {
     setValue(newValue);
   };
 
+  console.log(props.searchResult);
+
   return (
     <div className={classes.root}>
       <Tabs

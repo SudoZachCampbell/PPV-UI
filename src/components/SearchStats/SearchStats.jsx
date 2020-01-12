@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import BarGraph from '../BarGraph/BarGraph';
+import AreaGraph from '../AreaGraph/AreaGraph';
+
 import { Typography } from '@material-ui/core';
 
 export default function SearchStats(props) {
   const [keywords, setKeywords] = useState({});
-
-  useEffect(() => {}, [props.result]);
 
   return (
     <div>
@@ -14,7 +14,7 @@ export default function SearchStats(props) {
         <BarGraph data={props.result.keywords} x='keyword' y='count' />
       </div>
       <div>
-        <BarGraph data={props.result.priceCounts} x='price' y='count' />
+        <AreaGraph data={props.result.priceCounts} x='price' y='count' />
       </div>
     </div>
   );
