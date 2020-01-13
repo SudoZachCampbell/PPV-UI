@@ -16,25 +16,24 @@ export default function BarGraph(props) {
 
   useEffect(() => {
     setData(() => {
-      const bananas = _.sortBy(
-        _.reduce(
-          props.data,
-          (accum, value, key) => {
-            accum.push({
-              [props.x]: key,
-              [props.y]: value
-            });
-            return accum;
-          },
-          []
-        ),
-        [props.x]
-      ).map(value => {
-        value[props.x] = `£${value[props.x]}`;
-        return value
+      const r = /^£\d+/;
+      const graphData = _.orderBy(_.reduce(
+        props.data,
+        (accum, value, key) => {
+          accum.push({
+            rent: key.match(r)[0].replace('£', ''),
+            [props.x]: key,
+            [props.y]: value
+          });
+          return accum;
+        },
+        []
+      ), o => new Number(o.rent) ).map(value => {
+        delete value['rent'];
+        return value;
       });
-      console.log(bananas);
-      return bananas;
+      console.log(graphData);
+      return graphData;
     });
   }, [props.data]);
 
