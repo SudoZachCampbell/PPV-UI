@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import GoogleMapReact from 'google-map-react';
 
+import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import './GoogleMap.scss';
 
@@ -13,6 +16,8 @@ export default function GoogleMap(props) {
   const [long, setLong] = useState(0);
   const [zoom, setZoom] = useState(11);
   const [clickedZoom, setClickedZoom] = useState(true);
+
+  const theme = useTheme();
 
   useEffect(() => {
     if (!props.lat || !props.long) {
@@ -40,8 +45,10 @@ export default function GoogleMap(props) {
     backgroundColor: 'none',
     borderRadius: '50%',
     display: 'inline-block',
-    border: '2px solid #66ccff'
+    border: `2px solid ${theme.palette.secondary.main}`
   };
+
+  // const classes = useStyles();
 
   //   const RangeCircle = ({ text }) => (
   //   );
@@ -50,6 +57,7 @@ export default function GoogleMap(props) {
     setClickedZoom(true);
     setZoom(zoom);
   };
+
 
   return (
     <Paper className='map'>
@@ -60,7 +68,7 @@ export default function GoogleMap(props) {
         zoom={zoom}
         onZoomAnimationStart={mapChanged}
       >
-        <div lat={lat} lng={long} style={mapStyle}></div>
+        <div lat={lat} lng={long} style={mapStyle} />
       </GoogleMapReact>
       <Typography id='vertical-slider' gutterBottom>
         Range
@@ -71,6 +79,7 @@ export default function GoogleMap(props) {
           setClickedZoom(false);
           props.callback(event, value);
         }}
+        color='secondary'
         defaultValue={props.value}
         min={0.25}
         max={25}

@@ -68,7 +68,7 @@ function App(props) {
   return (
     <ThemeProvider theme={appTheme}>
       <div className='App'>
-        <AppBar position='static' color='fix-theme'>
+        <AppBar position='static'>
           <Toolbar>
             <IconButton edge='start' color='inherit' aria-label='menu'>
               <MenuIcon />
