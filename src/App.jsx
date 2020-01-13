@@ -4,14 +4,27 @@ import Loading from './containers/Loading/Loading';
 import Summary from './containers/Summary/Summary';
 
 import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import './App.scss';
+
+const appTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#8ac6d1'
+    },
+    secondary: {
+      main: '#ffb6b9'
+    }
+  }
+});
 
 function App(props) {
   const [viewState, setViewState] = useState(0);
@@ -53,19 +66,19 @@ function App(props) {
   }
 
   return (
-    <div className='App'>
-      <AppBar position='static' color='fix-theme'>
-        <Toolbar>
-          <IconButton edge='start' color='inherit' aria-label='menu'>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6'>Property Visualiser</Typography>
-        </Toolbar>
-      </AppBar>
-      <Box padding='35px'>
-        {view}
-      </Box>
-    </div>
+    <ThemeProvider theme={appTheme}>
+      <div className='App'>
+        <AppBar position='static' color='fix-theme'>
+          <Toolbar>
+            <IconButton edge='start' color='inherit' aria-label='menu'>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6'>Property Visualiser</Typography>
+          </Toolbar>
+        </AppBar>
+        <Box padding='35px'>{view}</Box>
+      </div>
+    </ThemeProvider>
   );
 }
 
