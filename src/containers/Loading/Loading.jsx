@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import RingLoader from 'react-spinners/RingLoader'
-import { css } from "@emotion/core"
+import RingLoader from 'react-spinners/RingLoader';
+import { css } from '@emotion/core';
 
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+import { useTheme } from '@material-ui/core/styles';
 
 import propertyAPI from '../../api/ppv-service';
-import { Typography } from '@material-ui/core';
 
 export default function Loading(props) {
   const [search, setSearch] = useState({});
+
+  const theme = useTheme();
 
   useEffect(() => {
     const searchFunction = async () => {
@@ -59,10 +63,24 @@ export default function Loading(props) {
   }, []);
 
   return (
-    <Box display='flex' flexDirection='column' height='100%' alignItems='center' justifyContent='center'>
-      <RingLoader css={css`margin: 30px auto;`} size={100} color={'#9013FE'}></RingLoader>
+    <Box
+      display='flex'
+      flexDirection='column'
+      height='100%'
+      alignItems='center'
+      justifyContent='center'
+    >
+      <RingLoader
+        css={css`
+          margin: 30px auto;
+        `}
+        size={100}
+        color={theme.palette.secondary.main}
+      ></RingLoader>
       <Box>
-        <Typography variant='h4' color='#9013FE'>Loading</Typography>
+        <Typography variant='h4' color='#9013FE'>
+          Loading
+        </Typography>
       </Box>
     </Box>
   );
