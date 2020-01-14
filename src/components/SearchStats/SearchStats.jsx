@@ -12,7 +12,7 @@ export default function SearchStats(props) {
   return (
     <div>
       <div>
-        <BarGraph data={props.result.keywords} x='keyword' y='count' />
+        {props.result.keywords && <BarGraph data={props.result.keywords} x='keyword' y='count' />}
       </div>
       <div>
         <AreaGraph data={props.result.priceCounts} x='price' y='count' />

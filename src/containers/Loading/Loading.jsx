@@ -18,7 +18,7 @@ export default function Loading(props) {
     const searchFunction = async () => {
       if (props.performance) {
         console.log(`Starting Process\nArea: ${props.area}`);
-        console.log(JSON.stringify(props.searchParams));
+        console.log('Search Query: ', JSON.stringify(props.searchParams));
         let property = await propertyAPI.getPropertyUrlsPerformance(
           props.searchParams
         );
