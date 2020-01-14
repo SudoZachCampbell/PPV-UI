@@ -17,9 +17,6 @@ export default function SearchStats(props) {
       <div>
         <AreaGraph data={props.result.priceCounts} x='price' y='count' />
       </div>
-      <div>
-        <Chart />
-      </div>
     </div>
   );
 }
