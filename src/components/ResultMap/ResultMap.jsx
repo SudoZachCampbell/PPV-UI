@@ -8,20 +8,20 @@ import MapMarker from '../MapMarker/MapMarker';
 
 export default function ResultMap(props) {
   return (
-    <Paper width='300px' height='300px'>
+    <Paper width={300} height={300}>
       <GoogleMapReact
         id='google-map'
         bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
         center={{
-            lat: props.result.location.lat,
-            lng: props.result.location.lng
+            lat: props.lat,
+            lng: props.lng
           }}
-        //zoom={zoom}
+        zoom={12}
         //   onZoomAnimationStart={mapChanged}
       >
-        {/* {_.map(props.result.searchResult, value => {
+        {_.map(props.result.searchResult, value => {
           return <MapMarker lat={value.lat} lng={value.lng} />;
-        })} */}
+        })}
       </GoogleMapReact>
     </Paper>
   );

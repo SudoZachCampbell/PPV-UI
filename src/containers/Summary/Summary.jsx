@@ -111,14 +111,10 @@ export default function Summary(props) {
         <SearchStats result={props.searchResult} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {/* <ResultMap result={props.searchResult} /> */}
-        <GoogleMap
-          range={5}
-          steps={steps}
+        <ResultMap
           lat={props.searchResult.location.lat}
           long={props.searchResult.location.lng}
-          callback={() => {}}
-          value={5}
+          result={props.searchResult.searchResult}
         />
       </TabPanel>
       <TabPanel value={value} index={2}>
