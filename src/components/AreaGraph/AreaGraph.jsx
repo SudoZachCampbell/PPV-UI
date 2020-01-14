@@ -10,8 +10,12 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+import {useTheme} from '@material-ui/core/styles';
+
 export default function BarGraph(props) {
   const [data, setData] = useState({});
+
+  const theme = useTheme();
 
   useEffect(() => {
     setData(() => {
@@ -55,8 +59,8 @@ export default function BarGraph(props) {
           <Area
             type='monotone'
             dataKey={props.y}
-            stroke='#8884d8'
-            fill='#8884d8'
+            stroke={theme.palette.secondary.main}
+            fill={theme.palette.secondary.main}
           />
         </AreaChart>
       </ResponsiveContainer>

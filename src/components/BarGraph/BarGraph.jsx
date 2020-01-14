@@ -11,8 +11,12 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+import {useTheme} from '@material-ui/core/styles'
+
 export default function BarGraph(props) {
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
+
+  const theme = useTheme();
 
   useEffect(() => {
     setData(() => {
@@ -49,7 +53,7 @@ export default function BarGraph(props) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey={props.y} fill='#8884d8' />
+          <Bar dataKey={props.y} fill={theme.palette.primary.main} />
         </BarChart>
       </ResponsiveContainer>
     </div>

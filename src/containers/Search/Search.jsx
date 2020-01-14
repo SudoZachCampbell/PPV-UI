@@ -201,11 +201,15 @@ export default function Search(props) {
     if (e.target.value) {
       console.log(`Value: ${e.target.value}`);
       ppvService.getAreaTerm(area).then(newTerm => {
-        console.log(`Term: ${newTerm}`);
+        console.log('Term: ', newTerm);
         const areaId = parseInt(newTerm.params.term[0]);
         console.log(`ID: ${areaId}`);
         if (areaId && !Number.isNaN(areaId)) {
           setTerm(areaId);
+          setPosition([
+            newTerm.phrase.search.geoTerm.coordinate.latitude,
+            newTerm.phrase.search.geoTerm.coordinate.longitude
+          ]);
         } else {
           setTerm(-1);
         }
@@ -232,8 +236,10 @@ export default function Search(props) {
       radius,
       runit: 'm',
       pt: 'residential',
-      term
-    }
+      term,
+      lat: position[0],
+      lng: position[1]
+    };
 
     const valueStore = {
       sta,
@@ -254,7 +260,21 @@ export default function Search(props) {
     setSearchParams(() => {
       return searchQuery;
     });
-  }, [term, radius, sta, min, max, minbeds, maxbeds, excludePoa, stygrp, ft, keywords, checkedFilters]);
+  }, [
+    term,
+    radius,
+    sta,
+    min,
+    max,
+    minbeds,
+    maxbeds,
+    excludePoa,
+    stygrp,
+    ft,
+    keywords,
+    checkedFilters,
+    position
+  ]);
 
   const toggleCounter = (id, increment) => {
     let currentCount = toggledCount + increment;

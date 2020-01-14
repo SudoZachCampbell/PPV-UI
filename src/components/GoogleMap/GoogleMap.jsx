@@ -58,7 +58,6 @@ export default function GoogleMap(props) {
     setZoom(zoom);
   };
 
-
   return (
     <Paper className='map'>
       <GoogleMapReact
