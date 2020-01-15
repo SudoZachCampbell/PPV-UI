@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     display: 'flex',
-    height: 224
+    height: '70vh'
   },
   tabs: {
     borderRight: `1px solid white`
@@ -113,7 +113,7 @@ export default function Summary(props) {
       <TabPanel value={value} index={1}>
         <ResultMap
           lat={props.searchResult.location.lat}
-          long={props.searchResult.location.lng}
+          lng={props.searchResult.location.lng}
           result={props.searchResult.searchResult}
         />
       </TabPanel>
