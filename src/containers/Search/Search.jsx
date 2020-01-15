@@ -51,7 +51,7 @@ export default function Search(props) {
   const [max, setMaxPrice] = useState(1000);
   const [student, setStudent] = useState(false);
   const [excludePoa, setExpoa] = useState(false);
-  const [radius, setRadius] = useState(5);
+  const [radius, setRadius] = useState(3);
   const [position, setPosition] = useState([0, 0]);
 
   const [areaFocusedBool, setAreaFocusedBool] = useState(false);
@@ -336,7 +336,6 @@ export default function Search(props) {
           lat={position[0]}
           long={position[1]}
           callback={rangeChanged}
-          value={radius}
         />
       </Box>
       <div id='search_filtersbar'>

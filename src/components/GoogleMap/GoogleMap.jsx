@@ -37,10 +37,10 @@ export default function GoogleMap(props) {
   const rangeCalc = (props.range * 1609.344) / metersPerPx;
 
   const mapStyle = {
-    width: `${rangeCalc}px`,
-    height: `${rangeCalc}px`,
-    marginLeft: -rangeCalc / 2 + 'px',
-    marginTop: -rangeCalc / 2 + 'px',
+    width: `${2*rangeCalc}px`,
+    height: `${2*rangeCalc}px`,
+    marginLeft: `${-rangeCalc}px`,
+    marginTop: `${-rangeCalc}px`,
     transition: clickedZoom ? 'all 0.4s' : 'all 1s',
     backgroundColor: 'none',
     borderRadius: '50%',
@@ -79,7 +79,7 @@ export default function GoogleMap(props) {
           props.callback(event, value);
         }}
         color='secondary'
-        defaultValue={props.value}
+        defaultValue={props.range}
         min={0.25}
         max={25}
         step={null}
