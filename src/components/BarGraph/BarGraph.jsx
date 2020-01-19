@@ -11,12 +11,16 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+import Typography from '@material-ui/core/Typography';
 import {useTheme} from '@material-ui/core/styles'
 
 export default function BarGraph(props) {
   const [data, setData] = useState({});
 
   const theme = useTheme();
+
+  const textColour = (value, entry) => <Typography color='textPrimary'>{value}</Typography>
+  
 
   useEffect(() => {
     setData(() => {
@@ -52,7 +56,7 @@ export default function BarGraph(props) {
           <XAxis dataKey={props.x} />
           <YAxis />
           <Tooltip />
-          <Legend />
+          <Legend formatter={textColour}/>
           <Bar dataKey={props.y} fill={theme.palette.primary.main} />
         </BarChart>
       </ResponsiveContainer>

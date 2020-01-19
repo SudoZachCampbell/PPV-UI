@@ -13,6 +13,7 @@ import Tabs from '@material-ui/core/Tabs';
 import { makeStyles } from '@material-ui/core/styles';
 
 import './Summary.scss';
+import { Typography } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -103,9 +104,9 @@ export default function Summary(props) {
         aria-label='Vertical tabs example'
         className={classes.tabs}
       >
-        <Tab label='Summary' {...a11yProps(0)} />
-        <Tab label='Map' {...a11yProps(1)} />
-        <Tab label='Property List' {...a11yProps(2)} />
+        <Tab label={<Typography color='textPrimary'>Summary</Typography>} {...a11yProps(0)} />
+        <Tab label={<Typography color='textPrimary'>Map</Typography>} {...a11yProps(1)} />
+        <Tab label={<Typography color='textPrimary'>Property List</Typography>} {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <SearchStats result={props.searchResult} />

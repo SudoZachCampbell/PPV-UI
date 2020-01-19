@@ -78,7 +78,7 @@ export default function Loading(props) {
         color={theme.palette.secondary.main}
       ></RingLoader>
       <Box>
-        <Typography variant='h4' color='#9013FE'>
+        <Typography variant='h4' color='textPrimary'>
           Loading
         </Typography>
       </Box>

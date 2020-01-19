@@ -114,7 +114,7 @@ export default function PropertyDetails(props) {
       <Button color='secondary' onClick={goBack}>
         Back
       </Button>
-      <Typography variant='h3'>{`${props.property.address}, ${props.property.postcode}`}</Typography>
+      <Typography color='textPrimary' variant='h3'>{`${props.property.address}, ${props.property.postcode}`}</Typography>
       <TableContainer component={Paper}>
         <Table aria-label='simple table'>
           <TableBody>

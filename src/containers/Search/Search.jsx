@@ -362,7 +362,7 @@ export default function Search(props) {
           divClass='price-container'
         >
           <>
-            <Typography label='Price' id='discrete-slider'>
+            <Typography color='textPrimary' label='Price' id='discrete-slider'>
               Price
             </Typography>
             <div>

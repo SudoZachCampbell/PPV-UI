@@ -4,6 +4,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 
 import './PriceTextField.scss';
+import Typography from '@material-ui/core/Typography';
 
 export default function PriceTextField(props) {
 
