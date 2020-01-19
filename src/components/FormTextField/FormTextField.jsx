@@ -9,22 +9,22 @@ const useStyles = makeStyles({
   headerBox: {},
 
   headerText: {
-    fontSize: '50px',
+    fontSize: '2.3vw',
     fontFamily: 'segoe ui'
   },
 
   headerLabel: {
-    fontSize: '30px',
+    fontSize: '2vw',
     fontFamily: 'segoe ui'
   },
   normalBox: {},
 
   normalText: {
-    fontSize: '20px',
+    fontSize: '2.3vw',
     fontFamily: 'segoe ui'
   },
   normalLabel: {
-    fontSize: '15px',
+    fontSize: '2.3vw',
     fontFamily: 'segoe ui'
   }
 });

@@ -309,7 +309,7 @@ export default function Search(props) {
   return (
     <div id='search_container'>
       <Box display='flex' flexDirection='row' id='search_top'>
-        <div>
+        <Box flexGrow={1}>
           <FormTextField
             label='Area'
             type='header'
@@ -329,14 +329,16 @@ export default function Search(props) {
           >
             Search
           </Button>
-        </div>
-        <GoogleMap
-          range={radius}
-          steps={steps}
-          lat={position[0]}
-          long={position[1]}
-          callback={rangeChanged}
-        />
+        </Box>
+        <Box flexGrow={2}>
+          <GoogleMap
+            range={radius}
+            steps={steps}
+            lat={position[0]}
+            long={position[1]}
+            callback={rangeChanged}
+          />
+        </Box>
       </Box>
       <div id='search_filtersbar'>
         <FilterToggle
@@ -349,6 +351,7 @@ export default function Search(props) {
             values={rentTypeOptions}
             link={sta}
             callback={rentTypeChanged}
+            id='sta'
           />
         </FilterToggle>
         <FilterToggle
@@ -406,6 +409,7 @@ export default function Search(props) {
             values={furnishedOptions}
             link={ft}
             callback={furnishedChanged}
+            id='furnished'
           />
         </FilterToggle>
         <FilterToggle

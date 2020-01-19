@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     transform: 'scaleX(-1)'
   },
   filterBox: {
-    width: '500px'
+    width: '50vw'
   }
 });
 

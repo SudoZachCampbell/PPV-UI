@@ -34,7 +34,7 @@ const MenuProps = {
 };
 
 export default function MultiDropDown(props) {
-  const id = `dropdown_${props.label.toLowerCase().replace(/\s/g, '')}`;
+  const id = `dropdown_${props.id}`;
   return (
     <div className='select'>
       <FormControl className='select'>
