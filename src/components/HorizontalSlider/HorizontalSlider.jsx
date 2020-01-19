@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 });
 
 export default function HorizontalSlider(props) {
-  const id = `hslider_${props.label.toLowerCase().replace(/\s/g, '')}`;
+  const id = `hslider_${props.id}`;
   const classes = useStyles();
 
   const marks = [];

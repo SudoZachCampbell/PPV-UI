@@ -39,7 +39,7 @@ export default function Search(props) {
   const [term, setTerm] = useState(28);
   const [sta, setRentTypes] = useState(['toLet', 'letAgreed', 'let']);
   const [stygrp, setHouseStyle] = useState(['2']);
-  const [keywords, setKeywords] = useState(['kitchen', 'bathroom']);
+  const [keywords, setKeywords] = useState({kitchen: 'kitchen', bathroom: 'bathroom'});
   const [ft, setFurnished] = useState([
     'fullyFurnished',
     'optional',

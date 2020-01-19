@@ -22,7 +22,7 @@ export default function QuickStats(props) {
   }, [props.toggled, props.term, props.query]);
 
   return (
-    <Typography variant='h5'>
+    <Typography color='textPrimary' variant='h5'>
       {!count
         ? 'Loading Number of Properties...'
         : count === 'empty'
