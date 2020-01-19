@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Divider from '@material-ui/core/Divider';
+import {useTheme} from '@material-ui/core/styles'
 
 import _ from 'lodash';
 
@@ -10,6 +11,8 @@ import icons from './icons';
 
 export default function HouseStyleSelect(props) {
   const [selected, setSelected] = useState({});
+
+  const theme = useTheme();
 
   useEffect(() => {
     const styleOptions = {

@@ -45,6 +45,7 @@ export default function FilterToggle(props) {
   return (
     <Box
       id={`filter_${props.id}`}
+      alignItems='center'
       display='flex'
       flexDirection='row'
       className={
@@ -75,7 +76,7 @@ export default function FilterToggle(props) {
         />
       </Button>
       {toggled || (
-        <Typography>
+        <Typography color='textPrimary'>
           {props.label}
         </Typography>
       )}

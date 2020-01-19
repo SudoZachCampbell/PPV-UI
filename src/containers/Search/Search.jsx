@@ -307,7 +307,7 @@ export default function Search(props) {
   };
 
   return (
-    <div id='search_container'>
+    <Box id='search_container'>
       <Box display='flex' flexDirection='row' id='search_top'>
         <Box flexGrow={1}>
           <FormTextField
@@ -454,6 +454,6 @@ export default function Search(props) {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 }

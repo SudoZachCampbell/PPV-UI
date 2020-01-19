@@ -17,6 +17,7 @@ import './App.scss';
 
 const appTheme = createMuiTheme({
   palette: {
+    type: 'dark',
     primary: {
       main: '#8ac6d1'
     },
@@ -67,7 +68,7 @@ function App(props) {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <div className='App'>
+      <Box className='App' bgcolor='background.paper'>
         <AppBar position='static' color='break'>
           <Toolbar>
             <IconButton edge='start' color='inherit' aria-label='menu'>
@@ -77,7 +78,7 @@ function App(props) {
           </Toolbar>
         </AppBar>
         <Box padding='35px'>{view}</Box>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 }
