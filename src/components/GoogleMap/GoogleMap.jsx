@@ -62,7 +62,7 @@ export default function GoogleMap(props) {
     <Paper className='map'>
       <GoogleMapReact
         id='google-map'
-        bootstrapURLKeys={{ key: 'AIzaSyCQLI34B1kJnIeAFKrcbzzJfqhwcfLBCK8' }}
+        bootstrapURLKeys={{ key: '' }}
         center={{ lat: lat, lng: long }}
         zoom={zoom}
         onZoomAnimationStart={mapChanged}
